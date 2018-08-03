@@ -1,0 +1,26 @@
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Project Gamedev.exe
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Project Gamedev.pdb
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\MonoGame.Framework.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.MediaFoundation.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.XAudio2.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.DXGI.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D11.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct2D1.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.XInput.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\MonoGame.Framework.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.XAudio2.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.DXGI.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.XInput.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.csprojAssemblyReference.cache
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.csproj.CoreCompileInputs.cache
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.csproj.CopyComplete
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.exe
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.pdb
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Characters\WalkLeft.xnb

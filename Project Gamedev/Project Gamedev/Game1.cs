@@ -12,6 +12,9 @@ namespace Project_Gamedev
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        Texture2D _playerTexture;
+        Player _player;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -40,7 +43,9 @@ namespace Project_Gamedev
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
+            _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\WalkLeft");
+            _player = new Player(_playerTexture, new Vector2(200));
+            _player._controls = new ControlArrows();
         }
 
         /// <summary>
@@ -62,7 +67,7 @@ namespace Project_Gamedev
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            _player.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,7 +80,9 @@ namespace Project_Gamedev
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            _player.Draw(spriteBatch);
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
