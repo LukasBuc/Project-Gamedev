@@ -8,19 +8,27 @@ using System.Threading.Tasks;
 
 namespace Project_Gamedev.Classes
 {
-    public class Tile
+    public class Tile : ICollide
     {
         private Texture2D _texture;
         public Vector2 Position { get; set; }
+        public Rectangle CollisionRectangle;
+
         public Tile(Texture2D texture, Vector2 pos)
         {
             _texture = texture;
             Position = pos;
+            CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 128, 128);
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
             spritebatch.Draw(_texture, Position, Color.AliceBlue);
+        }
+
+        public Rectangle GetCollisionRectangle()
+        {
+            return CollisionRectangle;
         }
     }
 }

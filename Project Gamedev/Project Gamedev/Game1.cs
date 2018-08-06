@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Project_Gamedev.Classes;
+using System.Collections.Generic;
 
 namespace Project_Gamedev
 {
@@ -17,6 +18,9 @@ namespace Project_Gamedev
         Player _player;
         Texture2D tileTexture;
         Level level1;
+
+        //TODO DEES IS OM TE TESTEN
+        List<ICollide> collideObjecten;
 
         public Game1()
         {
@@ -53,6 +57,18 @@ namespace Project_Gamedev
 
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
             _player = new Player(_playerTexture, new Vector2(100, 200));
+
+            //TODO DEES IS OM TE TESTEN
+            collideObjecten = new List<ICollide>();
+            collideObjecten.Add(_player);
+
+            foreach (var item in level1.tileArray)
+            {
+                if (item != null)
+                {
+                    collideObjecten.Add(item);
+                }             
+            }
         }
 
         /// <summary>
@@ -62,6 +78,21 @@ namespace Project_Gamedev
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+        }
+
+        private bool CheckCollision()
+        {
+            for (int i = 0; i < collideObjecten.Count; i++)
+            {
+                for (int j = i + 1; j < collideObjecten.Count; j++)
+                {
+                    if (collideObjecten[i].GetCollisionRectangle().Intersects(collideObjecten[j].GetCollisionRectangle()))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         /// <summary>
@@ -75,6 +106,11 @@ namespace Project_Gamedev
                 Exit();
 
             _player.Update(gameTime);
+
+            if (CheckCollision())
+            {
+                System.Console.WriteLine("AAAAAAA");
+            }
 
             base.Update(gameTime);
         }

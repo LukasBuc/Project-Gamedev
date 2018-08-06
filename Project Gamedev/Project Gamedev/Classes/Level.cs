@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,15 +11,16 @@ namespace Project_Gamedev.Classes
     public class Level
     {
         public Texture2D texture;
+
         public Level()
         {
-
+            
         }
 
         public byte[,] levelArray = new byte[,]
         {
             {1,0,1,0,1,0,0,0,0,1 },
-            {0,0,0,0,0,0,0,0,0,0 },
+            {0,0,1,0,0,0,0,0,0,0 },
             {1,1,1,1,1,0,0,1,0,0 },
         };
 
@@ -32,7 +34,7 @@ namespace Project_Gamedev.Classes
                 {
                     if (levelArray[x,y] == 1)
                     {
-                        tileArray[x, y] = new Tile(texture, new Microsoft.Xna.Framework.Vector2(y * 128, x * 128));
+                        tileArray[x, y] = new Tile(texture, new Vector2(y * 128, x * 128));
                     }
                 }
             }
