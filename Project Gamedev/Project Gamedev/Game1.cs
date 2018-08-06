@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Project_Gamedev.Classes;
 
 namespace Project_Gamedev
 {
@@ -14,6 +15,8 @@ namespace Project_Gamedev
 
         Texture2D _playerTexture;
         Player _player;
+        Texture2D tileTexture;
+        Level level1;
 
         public Game1()
         {
@@ -43,9 +46,13 @@ namespace Project_Gamedev
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\WalkLeft");
-            _player = new Player(_playerTexture, new Vector2(200));
-            _player._controls = new ControlArrows();
+            tileTexture = Content.Load<Texture2D>("Sprites\\Tiles\\Tile (1)");
+            level1 = new Level();
+            level1.texture = tileTexture;
+            level1.CreateWorld();
+
+            _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
+            _player = new Player(_playerTexture, new Vector2(100, 200));
         }
 
         /// <summary>
@@ -81,6 +88,7 @@ namespace Project_Gamedev
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
+            level1.DrawLevel(spriteBatch);
             _player.Draw(spriteBatch);
             spriteBatch.End();
 

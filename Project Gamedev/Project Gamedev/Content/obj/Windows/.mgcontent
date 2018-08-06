@@ -4,6 +4,9 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/Lukas/Desktop/Project Gamdedev/Project Gamedev/Project Gamedev/Content/Sprites/Characters/WalkLeft.jpg</File>
+    <File>C:/Users/Lukas/Desktop/Project Gamdedev/Project Gamedev/Project Gamedev/Content/Sprites/Characters/Player/Player sprite.png</File>
+    <File>C:/Users/Lukas/Desktop/Project Gamdedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/Tile (1).png</File>
+    <File>C:/Users/Lukas/Desktop/Project Gamdedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/Tile (2).png</File>
+    <File>C:/Users/Lukas/Desktop/Project Gamdedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/Tile (3).png</File>
   </SourceFiles>
 </SourceFileCollection>

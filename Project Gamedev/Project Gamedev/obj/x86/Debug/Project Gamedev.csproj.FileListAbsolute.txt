@@ -24,3 +24,7 @@ C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\
 C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.exe
 C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.pdb
 C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Characters\WalkLeft.xnb
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Characters\Player\Player sprite.xnb
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\Tile (1).xnb
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\Tile (2).xnb
+C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\Tile (3).xnb

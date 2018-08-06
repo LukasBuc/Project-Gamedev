@@ -22,13 +22,17 @@ namespace Project_Gamedev
         {
             Texture = _texture;
             Positie = _positie;
-            _ShowRect = new Rectangle(0, 0, 64, 205);
+            _ShowRect = new Rectangle(0, 0, 20, 28);
+
+            _controls = new ControlArrows();
 
             _animation = new Animation();
-            _animation.AddFrame(new Rectangle(0, 0, 64, 205));
-            _animation.AddFrame(new Rectangle(64, 0, 64, 205));
-            _animation.AddFrame(new Rectangle(128, 0, 64, 205));
-            _animation.AddFrame(new Rectangle(192, 0, 64, 205));
+            _animation.AddFrame(new Rectangle(0, 0, 20, 28));
+            _animation.AddFrame(new Rectangle(21, 0, 20, 28));
+            _animation.AddFrame(new Rectangle(42, 0, 20, 28));
+            _animation.AddFrame(new Rectangle(63, 0, 23, 28));
+            _animation.AddFrame(new Rectangle(87, 0, 20, 28));
+            _animation.AddFrame(new Rectangle(108, 0, 20, 28));
             _animation.AantalBewegingenPerSeconde = 8;
         }
 
