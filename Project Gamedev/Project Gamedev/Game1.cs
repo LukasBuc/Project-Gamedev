@@ -56,9 +56,12 @@ namespace Project_Gamedev
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
             _player = new Player(_playerTexture, new Vector2(100, 200));
 
-            //Collisionobjecten toevoegen aan lijst
+
             myCollisions = new Collisions();
-            myCollisions.AddCollisionsObject(_player);
+
+            //TODO DIT IS OM TE TESTEN
+            //Collisionobjecten toevoegen aan lijst
+            //myCollisions.AddCollisionsObject(_player);
 
             //Ophalen welke tiles worden gebruikt en in lijst zetten
             foreach (var item in level1.tileArray)
@@ -91,11 +94,22 @@ namespace Project_Gamedev
 
             _player.Update(gameTime);
 
-            if (myCollisions.CheckCollisions())
+            //Controleren of er collisions zijn met de player
+            if (myCollisions.CheckCollisions(_player))
             {
                 System.Console.WriteLine("AAAAAAA");
             }
 
+            if (myCollisions.CheckPlayerGrounded(_player) != null)
+            {
+                System.Console.WriteLine("GROUNDED");
+                _player.isGrounded = true;
+                _player.collisionObjectHeight = (int)myCollisions.CheckPlayerGrounded(_player);
+            }
+            else
+            {
+                _player.isGrounded = false;
+            }
             base.Update(gameTime);
         }
 

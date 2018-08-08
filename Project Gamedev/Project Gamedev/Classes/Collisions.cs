@@ -21,19 +21,33 @@ namespace Project_Gamedev.Classes
             collisionObjecten.Add(collisionRectangle);
         }
 
-        public bool CheckCollisions()
+        public bool CheckCollisions(ICollide playerCollisionRectangle)
         {
             for (int i = 0; i < collisionObjecten.Count; i++)
             {
-                for (int j = i + 1; j < collisionObjecten.Count; j++)
+                if (collisionObjecten[i].GetCollisionRectangle().Intersects(playerCollisionRectangle.GetCollisionRectangle()))
                 {
-                    if (collisionObjecten[i].GetCollisionRectangle().Intersects(collisionObjecten[j].GetCollisionRectangle()))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
+        }
+
+        //Kijkt of de player grounded is en geeft de hoogte van collision object terug
+        //Geeft null terug indien geen collision
+        public int? CheckPlayerGrounded(ICollide playerCollisionRectangle)
+        {
+            for (int i = 0; i < collisionObjecten.Count; i++)
+            {
+                if (playerCollisionRectangle.GetCollisionRectangle().Intersects(collisionObjecten[i].GetCollisionRectangle()))
+                {
+                    if(playerCollisionRectangle.GetCollisionRectangle().Bottom >= collisionObjecten[i].GetCollisionRectangle().Top)
+                    {
+                        return collisionObjecten[i].GetCollisionRectangle().Y;
+                    }                 
+                }
+            }
+            return null;
         }
     }
 }

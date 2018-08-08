@@ -19,7 +19,7 @@ namespace Project_Gamedev
         private Rectangle _ShowRect;
 
         //Collisions
-        public Rectangle CollisionRectangle;
+        public Rectangle CollisionRectangle;      
 
         //Animations
         private Animation _animation;
@@ -28,10 +28,25 @@ namespace Project_Gamedev
         //Controls
         public Controls _controls { get; set; }
 
+        //TODO DIT IS OM TE TESTEN
+        public bool isGrounded { get; set; }
+        public Vector2 VelocityY = new Vector2(0, 2);
+        public Vector2 jumpVelocity = new Vector2(0, 5);
+        public Vector2 jumpVelocityStart = new Vector2(0, 30);
+
+        float fallspeed = (float)0.5;
+        bool jumping = false;
+        int jumpCounter = 0;
+        public int collisionObjectHeight;
+
         public Player(Texture2D _texture, Vector2 _positie)
         {
             Texture = _texture;
             Positie = _positie;
+
+            //TODO DIT IS OM TE TESTEN
+            isGrounded = false;
+
             _ShowRect = new Rectangle(0, 0, 20, 28);
 
             CollisionRectangle = new Rectangle((int)Positie.X, (int)Positie.Y, 20, 28);
@@ -65,9 +80,53 @@ namespace Project_Gamedev
             {
                 Positie += VelocityX;
             }
+            //TODO ZWAARTEKRACHT BETER MAKEN
+            //Code om te springen
+            if (_controls.jump && isGrounded)
+            {
+                Positie -= jumpVelocityStart;
+                jumping = true;
+            }
 
+            if (jumping)
+            {
+                if (jumpCounter > 10)
+                {
+                    jumping = false;
+                    jumpCounter = 0;
+                }
+                else
+                {
+                    Positie -= jumpVelocity;
+                    jumpCounter++;
+                }
+            }
+
+            //Zwaartekracht en valsnelheid
+            if (!isGrounded && !jumping)
+            {
+                //Zorgt ervoor dat we sneller vallen als we langer in de lucht blijven
+                Positie += VelocityY * fallspeed;
+                fallspeed += (float)0.2;
+            }
+            else
+            {
+                //Val snelheid resetten
+                fallspeed = (float)0.5;
+                if (!jumping)
+                {
+                    SetCorrectHeight();
+                }              
+            }
             CollisionRectangle.X = (int)Positie.X;
             CollisionRectangle.Y = (int)Positie.Y;
+        }
+
+        //Positie van player aanpassen zodat die niet in objecten staat
+        public void SetCorrectHeight()
+        {
+            Vector2 newPosition = new Vector2(Positie.X, collisionObjectHeight - 28);
+            Positie = newPosition;
         }
 
         public void Draw(SpriteBatch spritebatch)
