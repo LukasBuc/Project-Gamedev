@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Project_Gamedev.Classes;
@@ -54,7 +55,7 @@ namespace Project_Gamedev
             level1.CreateWorld();
 
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
-            _player = new Player(_playerTexture, new Vector2(100, 200));
+            _player = new Player(_playerTexture, new Vector2(150, 200));
 
 
             myCollisions = new Collisions();
@@ -94,21 +95,56 @@ namespace Project_Gamedev
 
             _player.Update(gameTime);
 
-            //Controleren of er collisions zijn met de player
-            if (myCollisions.CheckCollisions(_player))
-            {
-                System.Console.WriteLine("AAAAAAA");
-            }
+            myCollisions.getCollisionObjects(_player);
+            myCollisions.checkCollisions(_player);
 
-            if (myCollisions.CheckPlayerGrounded(_player) != null)
+            //Controleren of er collisions zijn met de player
+            //if (myCollisions.checkCollisions(_player))
+            //{
+            //    System.Console.WriteLine("AAAAAAA");
+            //}
+
+            //Collisions bottom controleren
+            if (myCollisions.bottomCollisions.Count > 0)
             {
-                System.Console.WriteLine("GROUNDED");
+                Console.WriteLine("GROUNDED");
                 _player.isGrounded = true;
-                _player.collisionObjectHeight = (int)myCollisions.CheckPlayerGrounded(_player);
             }
             else
             {
                 _player.isGrounded = false;
+            }
+
+            //Collisions rechts controlleren
+            if (myCollisions.rightCollisions.Count > 0)
+            {
+                Console.WriteLine("RIGHT COLLISION");
+                _player.collisionRight = true;
+            }
+            else
+            {
+                _player.collisionRight = false;
+            }
+
+            //Collisions left controleren
+            if (myCollisions.leftCollisions.Count > 0)
+            {
+                Console.WriteLine("LEFT COLLISION");
+                _player.collisionLeft = true;
+            }
+            else
+            {
+                _player.collisionLeft = false;
+            }
+
+            if (myCollisions.topCollisions.Count > 0)
+            {
+                Console.WriteLine("TOP COLLISION");
+                _player.collisionTop = true;
+            }
+            else
+            {
+                _player.collisionTop = false;
             }
             base.Update(gameTime);
         }

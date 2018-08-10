@@ -30,14 +30,17 @@ namespace Project_Gamedev
 
         //TODO DIT IS OM TE TESTEN
         public bool isGrounded { get; set; }
+        public bool collisionRight { get; set; }
+        public bool collisionLeft { get; set; }
+        public bool collisionTop { get; set; }
+
         public Vector2 VelocityY = new Vector2(0, 2);
-        public Vector2 jumpVelocity = new Vector2(0, 5);
-        public Vector2 jumpVelocityStart = new Vector2(0, 30);
+        public Vector2 jumpVelocity = new Vector2(0, 5); //5
+        public Vector2 jumpVelocityStart = new Vector2(0, 90); //30
 
         float fallspeed = (float)0.5;
         bool jumping = false;
         int jumpCounter = 0;
-        public int collisionObjectHeight;
 
         public Player(Texture2D _texture, Vector2 _positie)
         {
@@ -46,6 +49,9 @@ namespace Project_Gamedev
 
             //TODO DIT IS OM TE TESTEN
             isGrounded = false;
+            collisionRight = false;
+            collisionLeft = false;
+            collisionTop = false;
 
             _ShowRect = new Rectangle(0, 0, 20, 28);
 
@@ -74,11 +80,17 @@ namespace Project_Gamedev
                 
             if (_controls.left)
             {
-                Positie -= VelocityX;
+                if (!collisionLeft)
+                {                    
+                    Positie -= VelocityX;
+                }
             }
             if (_controls.right)
             {
-                Positie += VelocityX;
+                if (!collisionRight)
+                {                    
+                    Positie += VelocityX;
+                }
             }
             //TODO ZWAARTEKRACHT BETER MAKEN
             //Code om te springen
@@ -88,6 +100,14 @@ namespace Project_Gamedev
                 jumping = true;
             }
 
+            //Als we vanboven een collision raken
+            if (collisionTop)
+            {
+                jumping = false;
+                jumpCounter = 0;
+            }
+            
+            //Jump mechanics & velocity
             if (jumping)
             {
                 if (jumpCounter > 10)
@@ -112,22 +132,12 @@ namespace Project_Gamedev
             else
             {
                 //Val snelheid resetten
-                fallspeed = (float)0.5;
-                if (!jumping)
-                {
-                    SetCorrectHeight();
-                }              
+                fallspeed = (float)0.5;           
             }
             CollisionRectangle.X = (int)Positie.X;
             CollisionRectangle.Y = (int)Positie.Y;
         }
 
-        //Positie van player aanpassen zodat die niet in objecten staat
-        public void SetCorrectHeight()
-        {
-            Vector2 newPosition = new Vector2(Positie.X, collisionObjectHeight - 28);
-            Positie = newPosition;
-        }
 
         public void Draw(SpriteBatch spritebatch)
         {

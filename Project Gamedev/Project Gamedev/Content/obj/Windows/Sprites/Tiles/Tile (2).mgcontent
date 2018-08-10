@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Lukas/Desktop/Project Gamdedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/Tile (2).png</SourceFile>
-  <SourceTime>2016-12-05T07:08:34+01:00</SourceTime>
+  <SourceTime>2018-08-09T22:23:42.0427298+02:00</SourceTime>
   <DestFile>C:/Users/Lukas/Desktop/Project Gamdedev/Project Gamedev/Project Gamedev/Content/bin/Windows/Sprites/Tiles/Tile (2).xnb</DestFile>
-  <DestTime>2018-08-06T14:18:39.2901743+02:00</DestTime>
+  <DestTime>2018-08-09T22:24:44.6979183+02:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
