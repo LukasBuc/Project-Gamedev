@@ -19,7 +19,7 @@ namespace Project_Gamedev
         private Rectangle _ShowRect;
 
         //Collisions
-        public Rectangle CollisionRectangle;      
+        public Rectangle CollisionRectangle;
 
         //Animations
         private Animation _animation;
@@ -45,6 +45,15 @@ namespace Project_Gamedev
         //Player info
         const int playerHeight = 28;
         const int playerwidth = 20;
+
+        public bool movingLeft = false;
+        public bool movingRight = false;
+        public bool movingUp = false;
+        public bool movingDown = false;
+        public Vector2 totaalFallSpeed;
+        public Vector2 jumpSpeed;
+
+        bool firstTick = false;
 
         public Player(Texture2D _texture, Vector2 _positie)
         {
@@ -77,31 +86,55 @@ namespace Project_Gamedev
         {
             _controls.Update();
 
+            //Bewegen links
             if (_controls.left || _controls.right)
             {
                 _animation.Update(gameTime);
             }
-                
+
             if (_controls.left)
             {
                 if (!collisionLeft)
-                {                    
+                {
                     Positie -= VelocityX;
+                    movingLeft = true;
+                }
+                else
+                {
+                    movingLeft = false;
                 }
             }
+            else
+            {
+                movingLeft = false;
+            }
+
+            //Bewegen rechts
             if (_controls.right)
             {
                 if (!collisionRight)
-                {                    
+                {
                     Positie += VelocityX;
+                    movingRight = true;
+                }
+                else
+                {
+                    movingRight = false;
                 }
             }
-            //TODO ZWAARTEKRACHT BETER MAKEN
+            else
+            {
+                movingRight = false;
+            }
+
             //Code om te springen
             if (_controls.jump && isGrounded)
             {
                 Positie -= jumpVelocityStart;
+                jumpSpeed = jumpVelocityStart;
                 jumping = true;
+                movingUp = true;
+                firstTick = true;
             }
 
             //Als we vanboven een collision raken
@@ -109,8 +142,9 @@ namespace Project_Gamedev
             {
                 jumping = false;
                 jumpCounter = 0;
+                movingUp = false;
             }
-            
+
             //Jump mechanics & velocity
             if (jumping)
             {
@@ -118,11 +152,25 @@ namespace Project_Gamedev
                 {
                     jumping = false;
                     jumpCounter = 0;
+                    movingUp = false;
+                    movingDown = true;
+
+                    
                 }
                 else
                 {
                     Positie -= jumpVelocity;
+                    if (firstTick)
+                    {
+                        firstTick = false;
+                    }
+                    else
+                    {
+                        jumpSpeed = jumpVelocity;
+                    }
+                    
                     jumpCounter++;
+                    
                 }
             }
 
@@ -130,14 +178,18 @@ namespace Project_Gamedev
             if (!isGrounded && !jumping)
             {
                 //Zorgt ervoor dat we sneller vallen als we langer in de lucht blijven
-                Positie += VelocityY * fallspeed;
+                totaalFallSpeed = VelocityY * fallspeed;
+                Positie += totaalFallSpeed;
                 fallspeed += (float)0.2;
             }
             else
             {
                 //Val snelheid resetten
                 fallspeed = (float)0.5;
+                totaalFallSpeed = VelocityY * fallspeed;
+                movingDown = false;
             }
+
             CollisionRectangle.X = (int)Positie.X;
             CollisionRectangle.Y = (int)Positie.Y;
         }

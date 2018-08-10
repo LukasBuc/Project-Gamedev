@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Classes\Animation.cs" />
     <Compile Include="Classes\AnimationFrame.cs" />
+    <Compile Include="Classes\Camera2d.cs" />
     <Compile Include="Classes\Collisions.cs" />
     <Compile Include="Classes\Controls.cs" />
     <Compile Include="Classes\ICollide.cs" />

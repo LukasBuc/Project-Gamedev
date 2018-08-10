@@ -19,7 +19,11 @@ namespace Project_Gamedev
         Player _player;
         Texture2D tileTexture;
         Level level1;
-        Collisions myCollisions;   
+        Collisions myCollisions;
+        Vector2 campos = new Vector2();
+
+
+        Camera2d camera;
 
         public Game1()
         {
@@ -38,6 +42,7 @@ namespace Project_Gamedev
             // TODO: Add your initialization logic here
 
             base.Initialize();
+            camera = new Camera2d(GraphicsDevice.Viewport);
         }
 
         /// <summary>
@@ -149,6 +154,28 @@ namespace Project_Gamedev
             {
                 _player.collisionTop = false;
             }
+
+            //Camera positie
+            if (_player.movingRight)
+            {
+                campos += _player.VelocityX;
+            }
+
+            if (_player.movingLeft)
+            {
+                campos -= _player.VelocityX;
+            }
+
+            if (_player.movingUp)
+            {
+                campos -= _player.jumpSpeed;
+            }
+
+            if (_player.movingDown)
+            {
+                campos += _player.totaalFallSpeed;
+            }
+
             base.Update(gameTime);
         }
 
@@ -160,7 +187,12 @@ namespace Project_Gamedev
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            var viewMatrix = camera.GetViewMatrix();
+            camera.Position = campos;
+
+
+            spriteBatch.Begin(transformMatrix: viewMatrix);
+
             level1.DrawLevel(spriteBatch);
             _player.Draw(spriteBatch);
             spriteBatch.End();
