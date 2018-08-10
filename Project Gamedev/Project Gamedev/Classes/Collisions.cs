@@ -16,6 +16,8 @@ namespace Project_Gamedev.Classes
         public List<ICollide> leftCollisions { get; set; }
         public List<ICollide> topCollisions { get; set; }
 
+        public int bottomCollisionHeight { get; set; }
+
         public Collisions()
         {
             mogelijkeCollisionObjecten = new List<ICollide>();
@@ -26,7 +28,7 @@ namespace Project_Gamedev.Classes
             mogelijkeCollisionObjecten.Add(collisionRectangle);
         }
 
-        //Kijtk of er collisions zijn met de player en steekt deze in een lijst
+        //Kijkt of er collisions zijn met de player en steekt deze in een lijst
         public void getCollisionObjects(ICollide playerCollisionRectangle)
         {
             collisionObjecten = new List<ICollide>();
@@ -57,6 +59,7 @@ namespace Project_Gamedev.Classes
                     playerCollisionRectangle.GetCollisionRectangle().Left <= collisionObjecten[i].GetCollisionRectangle().Right - 5)
                 {
                     bottomCollisions.Add(collisionObjecten[i]);
+                    bottomCollisionHeight = collisionObjecten[i].GetCollisionRectangle().Top;
                 }
 
                 //Check right

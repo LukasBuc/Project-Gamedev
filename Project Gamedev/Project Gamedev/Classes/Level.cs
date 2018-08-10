@@ -19,7 +19,7 @@ namespace Project_Gamedev.Classes
 
         public byte[,] levelArray = new byte[,]
         {
-            {0,1,0,0,1,0,0,0,0,1 },
+            {0,0,0,0,1,0,0,0,0,1 },
             {1,0,0,1,0,0,0,0,0,0 },
             {1,1,1,1,1,0,0,1,0,0 },
         };

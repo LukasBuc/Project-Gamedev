@@ -42,6 +42,10 @@ namespace Project_Gamedev
         bool jumping = false;
         int jumpCounter = 0;
 
+        //Player info
+        const int playerHeight = 28;
+        const int playerwidth = 20;
+
         public Player(Texture2D _texture, Vector2 _positie)
         {
             Texture = _texture;
@@ -53,19 +57,19 @@ namespace Project_Gamedev
             collisionLeft = false;
             collisionTop = false;
 
-            _ShowRect = new Rectangle(0, 0, 20, 28);
+            _ShowRect = new Rectangle(0, 0, playerwidth, playerHeight);
 
-            CollisionRectangle = new Rectangle((int)Positie.X, (int)Positie.Y, 20, 28);
+            CollisionRectangle = new Rectangle((int)Positie.X, (int)Positie.Y, playerwidth, playerHeight);
 
             _controls = new ControlArrows();
 
             _animation = new Animation();
-            _animation.AddFrame(new Rectangle(0, 0, 20, 28));
-            _animation.AddFrame(new Rectangle(21, 0, 20, 28));
-            _animation.AddFrame(new Rectangle(42, 0, 20, 28));
-            _animation.AddFrame(new Rectangle(63, 0, 23, 28));
-            _animation.AddFrame(new Rectangle(87, 0, 20, 28));
-            _animation.AddFrame(new Rectangle(108, 0, 20, 28));
+            _animation.AddFrame(new Rectangle(0, 0, 20, playerHeight));
+            _animation.AddFrame(new Rectangle(21, 0, 20, playerHeight));
+            _animation.AddFrame(new Rectangle(42, 0, 20, playerHeight));
+            _animation.AddFrame(new Rectangle(63, 0, 23, playerHeight));
+            _animation.AddFrame(new Rectangle(87, 0, 20, playerHeight));
+            _animation.AddFrame(new Rectangle(108, 0, 20, playerHeight));
             _animation.AantalBewegingenPerSeconde = 8;
         }
 
@@ -132,12 +136,17 @@ namespace Project_Gamedev
             else
             {
                 //Val snelheid resetten
-                fallspeed = (float)0.5;           
+                fallspeed = (float)0.5;
             }
             CollisionRectangle.X = (int)Positie.X;
             CollisionRectangle.Y = (int)Positie.Y;
         }
 
+        public void setCorrectHeigt(int collisionHeight)
+        {
+            Vector2 newPosition = new Vector2(Positie.X, collisionHeight - playerHeight);
+            Positie = newPosition;
+        }
 
         public void Draw(SpriteBatch spritebatch)
         {

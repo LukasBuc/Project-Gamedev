@@ -109,6 +109,9 @@ namespace Project_Gamedev
             {
                 Console.WriteLine("GROUNDED");
                 _player.isGrounded = true;
+
+                //Y positie juist zetten zodat player niet in de grond zit
+                _player.setCorrectHeigt(myCollisions.bottomCollisionHeight);
             }
             else
             {
