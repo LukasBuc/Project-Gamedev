@@ -54,13 +54,13 @@ namespace Project_Gamedev
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            tileTexture = Content.Load<Texture2D>("Sprites\\Tiles\\Tile (1)");
+            tileTexture = Content.Load<Texture2D>("Sprites\\Tiles\\TileSmall (1)"); //"Sprites\\Tiles\\Tile (1)"
             level1 = new Level();
             level1.texture = tileTexture;
             level1.CreateWorld();
 
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
-            _player = new Player(_playerTexture, new Vector2(150, 200));
+            _player = new Player(_playerTexture, new Vector2(150, 100));
 
 
             myCollisions = new Collisions();
@@ -164,16 +164,6 @@ namespace Project_Gamedev
             if (_player.movingLeft)
             {
                 campos -= _player.VelocityX;
-            }
-
-            if (_player.movingUp)
-            {
-                campos -= _player.jumpSpeed;
-            }
-
-            if (_player.movingDown)
-            {
-                campos += _player.totaalFallSpeed;
             }
 
             base.Update(gameTime);

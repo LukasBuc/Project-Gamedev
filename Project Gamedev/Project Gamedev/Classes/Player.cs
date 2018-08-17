@@ -35,12 +35,12 @@ namespace Project_Gamedev
         public bool collisionTop { get; set; }
 
         public Vector2 VelocityY = new Vector2(0, 2);
-        public Vector2 jumpVelocity = new Vector2(0, 5); //5
-        public Vector2 jumpVelocityStart = new Vector2(0, 90); //30
+        public Vector2 jumpVelocity = new Vector2(0, 6);
 
         float fallspeed = (float)0.5;
         bool jumping = false;
         int jumpCounter = 0;
+
 
         //Player info
         const int playerHeight = 28;
@@ -48,19 +48,15 @@ namespace Project_Gamedev
 
         public bool movingLeft = false;
         public bool movingRight = false;
-        public bool movingUp = false;
-        public bool movingDown = false;
+
         public Vector2 totaalFallSpeed;
         public Vector2 jumpSpeed;
-
-        bool firstTick = false;
 
         public Player(Texture2D _texture, Vector2 _positie)
         {
             Texture = _texture;
             Positie = _positie;
 
-            //TODO DIT IS OM TE TESTEN
             isGrounded = false;
             collisionRight = false;
             collisionLeft = false;
@@ -130,11 +126,7 @@ namespace Project_Gamedev
             //Code om te springen
             if (_controls.jump && isGrounded)
             {
-                Positie -= jumpVelocityStart;
-                jumpSpeed = jumpVelocityStart;
                 jumping = true;
-                movingUp = true;
-                firstTick = true;
             }
 
             //Als we vanboven een collision raken
@@ -142,35 +134,21 @@ namespace Project_Gamedev
             {
                 jumping = false;
                 jumpCounter = 0;
-                movingUp = false;
             }
 
             //Jump mechanics & velocity
             if (jumping)
             {
-                if (jumpCounter > 10)
+                if (jumpCounter > 11) //5
                 {
                     jumping = false;
-                    jumpCounter = 0;
-                    movingUp = false;
-                    movingDown = true;
-
-                    
+                    jumpCounter = 0;                   
                 }
                 else
                 {
                     Positie -= jumpVelocity;
-                    if (firstTick)
-                    {
-                        firstTick = false;
-                    }
-                    else
-                    {
-                        jumpSpeed = jumpVelocity;
-                    }
-                    
-                    jumpCounter++;
-                    
+                    //jumpSpeed = jumpVelocity;                  
+                    jumpCounter++;                  
                 }
             }
 
@@ -180,14 +158,13 @@ namespace Project_Gamedev
                 //Zorgt ervoor dat we sneller vallen als we langer in de lucht blijven
                 totaalFallSpeed = VelocityY * fallspeed;
                 Positie += totaalFallSpeed;
-                fallspeed += (float)0.2;
+                fallspeed += (float)0.09;
             }
             else
             {
                 //Val snelheid resetten
                 fallspeed = (float)0.5;
                 totaalFallSpeed = VelocityY * fallspeed;
-                movingDown = false;
             }
 
             CollisionRectangle.X = (int)Positie.X;
