@@ -22,25 +22,28 @@ namespace Project_Gamedev
         public Rectangle CollisionRectangle;
 
         //Animations
-        private Animation _animation;
+        private Animation _animationWalkRight;
+        private Animation _animationWalkLeft;
+        private Animation _animationIdleRight;
+        private Animation _animationIdleLeft;
         public Vector2 VelocityX = new Vector2(2, 0);
+
+        private bool walkedleft = false;
 
         //Controls
         public Controls _controls { get; set; }
 
-        //TODO DIT IS OM TE TESTEN
         public bool isGrounded { get; set; }
         public bool collisionRight { get; set; }
         public bool collisionLeft { get; set; }
         public bool collisionTop { get; set; }
 
         public Vector2 VelocityY = new Vector2(0, 2);
-        public Vector2 jumpVelocity = new Vector2(0, 6);
+        public Vector2 jumpVelocity = new Vector2(0, 7);
 
-        float fallspeed = (float)0.5;
-        bool jumping = false;
-        int jumpCounter = 0;
-
+        private float fallspeed = (float)0.5;
+        private bool jumping = false;
+        private int jumpCounter = 0;
 
         //Player info
         const int playerHeight = 28;
@@ -68,14 +71,36 @@ namespace Project_Gamedev
 
             _controls = new ControlArrows();
 
-            _animation = new Animation();
-            _animation.AddFrame(new Rectangle(0, 0, 20, playerHeight));
-            _animation.AddFrame(new Rectangle(21, 0, 20, playerHeight));
-            _animation.AddFrame(new Rectangle(42, 0, 20, playerHeight));
-            _animation.AddFrame(new Rectangle(63, 0, 23, playerHeight));
-            _animation.AddFrame(new Rectangle(87, 0, 20, playerHeight));
-            _animation.AddFrame(new Rectangle(108, 0, 20, playerHeight));
-            _animation.AantalBewegingenPerSeconde = 8;
+            _animationWalkRight = new Animation();
+            _animationWalkLeft = new Animation();
+            _animationIdleRight = new Animation();
+            _animationIdleLeft = new Animation();
+
+            _animationWalkRight.AddFrame(new Rectangle(0, 0, 20, playerHeight));
+            _animationWalkRight.AddFrame(new Rectangle(21, 0, 20, playerHeight));
+            _animationWalkRight.AddFrame(new Rectangle(42, 0, 20, playerHeight));
+            _animationWalkRight.AddFrame(new Rectangle(63, 0, 23, playerHeight));
+            _animationWalkRight.AddFrame(new Rectangle(87, 0, 20, playerHeight));
+            _animationWalkRight.AddFrame(new Rectangle(108, 0, 20, playerHeight));
+            _animationWalkRight.AantalBewegingenPerSeconde = 8;
+            
+            _animationWalkLeft.AddFrame(new Rectangle(0, 96, 20, playerHeight));
+            _animationWalkLeft.AddFrame(new Rectangle(21, 96, 20, playerHeight));
+            _animationWalkLeft.AddFrame(new Rectangle(42, 96, 20, playerHeight));
+            _animationWalkLeft.AddFrame(new Rectangle(63, 96, 20, playerHeight));
+            _animationWalkLeft.AddFrame(new Rectangle(87, 96, 20, playerHeight));
+            _animationWalkLeft.AddFrame(new Rectangle(108, 96, 20, playerHeight));
+            _animationWalkLeft.AantalBewegingenPerSeconde = 8;
+
+            _animationIdleRight.AddFrame(new Rectangle(0, 34, 19, playerHeight));
+            _animationIdleRight.AddFrame(new Rectangle(20, 34, 17, playerHeight));
+            _animationIdleRight.AddFrame(new Rectangle(38, 34, 19, playerHeight));
+            _animationIdleRight.AantalBewegingenPerSeconde = 3;
+
+            _animationIdleLeft.AddFrame(new Rectangle(0, 128, 19, playerHeight));
+            _animationIdleLeft.AddFrame(new Rectangle(20, 128, 19, playerHeight));
+            _animationIdleLeft.AddFrame(new Rectangle(40, 128, 18, playerHeight));
+            _animationIdleLeft.AantalBewegingenPerSeconde = 3;
         }
 
         public void Update(GameTime gameTime)
@@ -83,17 +108,18 @@ namespace Project_Gamedev
             _controls.Update();
 
             //Bewegen links
-            if (_controls.left || _controls.right)
-            {
-                _animation.Update(gameTime);
-            }
-
             if (_controls.left)
             {
                 if (!collisionLeft)
                 {
                     Positie -= VelocityX;
                     movingLeft = true;
+
+                    //Animation naar links wandelen
+                    _animationWalkLeft.Update(gameTime);
+
+                    //Walked left op true zetten zodat de idle animatie naar de juiste kant staat
+                    walkedleft = true;
                 }
                 else
                 {
@@ -112,6 +138,12 @@ namespace Project_Gamedev
                 {
                     Positie += VelocityX;
                     movingRight = true;
+                    
+                    //Animation naar rechts wandelen
+                    _animationWalkRight.Update(gameTime);
+
+                    //Walked left op false zetten zodat de idle animatie naar de juiste kant staat
+                    walkedleft = false;
                 }
                 else
                 {
@@ -123,11 +155,24 @@ namespace Project_Gamedev
                 movingRight = false;
             }
 
-            //Code om te springen
+            if (!_controls.left && !_controls.right && !_controls.jump)
+            {
+                if (walkedleft)
+                {
+                    _animationIdleLeft.Update(gameTime);
+                }
+                else
+                {
+                    _animationIdleRight.Update(gameTime);
+                }
+            }
+
+            //Jump 
             if (_controls.jump && isGrounded)
             {
                 jumping = true;
             }
+
 
             //Als we vanboven een collision raken
             if (collisionTop)
@@ -142,13 +187,12 @@ namespace Project_Gamedev
                 if (jumpCounter > 11) //5
                 {
                     jumping = false;
-                    jumpCounter = 0;                   
+                    jumpCounter = 0;
                 }
                 else
                 {
                     Positie -= jumpVelocity;
-                    //jumpSpeed = jumpVelocity;                  
-                    jumpCounter++;                  
+                    jumpCounter++;
                 }
             }
 
@@ -165,6 +209,7 @@ namespace Project_Gamedev
                 //Val snelheid resetten
                 fallspeed = (float)0.5;
                 totaalFallSpeed = VelocityY * fallspeed;
+
             }
 
             CollisionRectangle.X = (int)Positie.X;
@@ -179,7 +224,26 @@ namespace Project_Gamedev
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(Texture, Positie, _animation.CurrentFrame.SourceRectangle, Color.AliceBlue);
+
+            if (_controls.left)
+            {                
+                spritebatch.Draw(Texture, Positie, _animationWalkLeft.CurrentFrame.SourceRectangle, Color.AliceBlue);
+            }
+            else if (_controls.right)
+            {
+                spritebatch.Draw(Texture, Positie, _animationWalkRight.CurrentFrame.SourceRectangle, Color.AliceBlue);
+            }
+            else
+            {
+                if (walkedleft)
+                {
+                    spritebatch.Draw(Texture, Positie, _animationIdleLeft.CurrentFrame.SourceRectangle, Color.AliceBlue);
+                }
+                else
+                {
+                    spritebatch.Draw(Texture, Positie, _animationIdleRight.CurrentFrame.SourceRectangle, Color.AliceBlue);
+                }
+            }
         }
 
         public Rectangle GetCollisionRectangle()

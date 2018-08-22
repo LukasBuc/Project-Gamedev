@@ -30,7 +30,6 @@ namespace Project_Gamedev
             AnimationFrame newFrame = new AnimationFrame()
             {
                 SourceRectangle = rectangle,
-                //Duration = duration
             };
             frames.Add(newFrame);
             CurrentFrame = frames[0];
