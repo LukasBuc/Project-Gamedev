@@ -12,6 +12,7 @@ namespace Project_Gamedev
         public bool left { get; set; }
         public bool right { get; set; }
         public bool jump { get; set; }
+        public bool fire { get; set; }
         public abstract void Update();
     }
 
@@ -49,6 +50,16 @@ namespace Project_Gamedev
             if (stateKey.IsKeyUp(Keys.Space))
             {
                 jump = false;
+            }
+
+            //Check of schieten is ingedrukt of niet
+            if (stateKey.IsKeyDown(Keys.C))
+            {
+                fire = true;
+            }
+            if (stateKey.IsKeyUp(Keys.C))
+            {
+                fire = false;
             }
         }
     }

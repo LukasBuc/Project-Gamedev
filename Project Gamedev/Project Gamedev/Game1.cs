@@ -22,6 +22,9 @@ namespace Project_Gamedev
         Collisions myCollisions;
         Vector2 campos = new Vector2();
 
+        Texture2D _projectileTexture;
+        Projectile playerProjectile;
+        bool projectileCreated = false;
 
         Camera2d camera;
 
@@ -59,9 +62,14 @@ namespace Project_Gamedev
             level1.texture = tileTexture;
             level1.CreateWorld();
 
+            _projectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
+            playerProjectile = new Projectile();
+
+
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
             _player = new Player(_playerTexture, new Vector2(150, 100));
 
+            
 
             myCollisions = new Collisions();
 
@@ -145,6 +153,7 @@ namespace Project_Gamedev
                 _player.collisionLeft = false;
             }
 
+            //Collision top controleren
             if (myCollisions.topCollisions.Count > 0)
             {
                 Console.WriteLine("TOP COLLISION");
@@ -166,6 +175,18 @@ namespace Project_Gamedev
                 campos -= _player.VelocityX;
             }
 
+            //Schieten
+            if (_player.fireProjectile)
+            {
+                playerProjectile.CreateProjectile(_projectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.walkedleft);
+                projectileCreated = true;
+            }
+
+            if (projectileCreated)
+            {
+                playerProjectile.Update(gameTime);            
+            }
+
             base.Update(gameTime);
         }
 
@@ -185,6 +206,12 @@ namespace Project_Gamedev
 
             level1.DrawLevel(spriteBatch);
             _player.Draw(spriteBatch);
+
+            if (projectileCreated)
+            {
+                playerProjectile.Draw(spriteBatch);
+            }
+
             spriteBatch.End();
 
             base.Draw(gameTime);

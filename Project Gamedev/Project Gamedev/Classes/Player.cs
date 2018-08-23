@@ -16,7 +16,11 @@ namespace Project_Gamedev
 
         //Tonen van player
         private Texture2D Texture { get; set; }
-        private Rectangle _ShowRect;
+        //private Rectangle _ShowRect;
+
+        //Schieten
+        public bool fireProjectile = false;
+
 
         //Collisions
         public Rectangle CollisionRectangle;
@@ -28,7 +32,7 @@ namespace Project_Gamedev
         private Animation _animationIdleLeft;
         public Vector2 VelocityX = new Vector2(2, 0);
 
-        private bool walkedleft = false;
+        public bool walkedleft = false;
 
         //Controls
         public Controls _controls { get; set; }
@@ -52,8 +56,7 @@ namespace Project_Gamedev
         public bool movingLeft = false;
         public bool movingRight = false;
 
-        public Vector2 totaalFallSpeed;
-        public Vector2 jumpSpeed;
+        private Vector2 totaalFallSpeed;
 
         public Player(Texture2D _texture, Vector2 _positie)
         {
@@ -65,7 +68,7 @@ namespace Project_Gamedev
             collisionLeft = false;
             collisionTop = false;
 
-            _ShowRect = new Rectangle(0, 0, playerwidth, playerHeight);
+            //_ShowRect = new Rectangle(0, 0, playerwidth, playerHeight);
 
             CollisionRectangle = new Rectangle((int)Positie.X, (int)Positie.Y, playerwidth, playerHeight);
 
@@ -106,6 +109,16 @@ namespace Project_Gamedev
         public void Update(GameTime gameTime)
         {
             _controls.Update();
+
+            //Schieten
+            if (_controls.fire)
+            {
+                fireProjectile = true;
+            }
+            else
+            {
+                fireProjectile = false;
+            }
 
             //Bewegen links
             if (_controls.left)
@@ -155,6 +168,7 @@ namespace Project_Gamedev
                 movingRight = false;
             }
 
+            //Idle links/rechts
             if (!_controls.left && !_controls.right && !_controls.jump)
             {
                 if (walkedleft)
