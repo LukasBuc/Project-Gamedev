@@ -49,6 +49,9 @@ namespace Project_Gamedev
         private bool jumping = false;
         private int jumpCounter = 0;
 
+        bool fired = false;
+        bool jumped = false;
+
         //Player info
         const int playerHeight = 28;
         const int playerwidth = 20;
@@ -105,19 +108,26 @@ namespace Project_Gamedev
             _animationIdleLeft.AddFrame(new Rectangle(40, 128, 18, playerHeight));
             _animationIdleLeft.AantalBewegingenPerSeconde = 3;
         }
-
+        
         public void Update(GameTime gameTime)
         {
             _controls.Update();
-
+            
             //Schieten
-            if (_controls.fire)
+            if (_controls.fire && !fired)
             {
                 fireProjectile = true;
+                fired = true;
             }
             else
             {
-                fireProjectile = false;
+                fireProjectile = false;              
+            }
+
+            //zorgt ervoor dat je firekey moet loslaten voor je opnieuw kan schieten
+            if (!_controls.fire)
+            {               
+                fired = false;
             }
 
             //Bewegen links
@@ -182,11 +192,17 @@ namespace Project_Gamedev
             }
 
             //Jump 
-            if (_controls.jump && isGrounded)
+            if (_controls.jump && isGrounded && !jumped)
             {
                 jumping = true;
+                jumped = true;
             }
 
+            //zorgt ervoor dat je jumpkey moet loslaten voor je opnieuw springt
+            if (!_controls.jump)
+            {
+                jumped = false;
+            }
 
             //Als we vanboven een collision raken
             if (collisionTop)
