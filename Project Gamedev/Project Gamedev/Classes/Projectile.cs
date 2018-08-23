@@ -12,7 +12,11 @@ namespace Project_Gamedev.Classes
     {
         //Positie
         public Vector2 Positie { get; set; }
+        
+        //Snelheid projectiel
         private Vector2 VelocityX = new Vector2(5, 0);
+
+        //Richting die wordt geschoten
         private bool shootLeft;
 
         //Projectiel tonen
@@ -20,23 +24,19 @@ namespace Project_Gamedev.Classes
         private Animation _animationProjectileLeft;
         private Animation _animationProjectileRight;
 
+
+
         
         //Collision
         public Rectangle CollisionRectangle;
 
-        public Projectile()
-        {
-            
-        }
-
-        //public Rectangle[] projectileArray = new Rectangle[3];
-
-        public void CreateProjectile(Texture2D _texture, Vector2 _positie, bool lookingLeft)
+        public Projectile(Texture2D _texture, Vector2 _positie, bool lookingLeft)
         {
             Texture = _texture;
             Positie = _positie;
             _animationProjectileLeft = new Animation();
             _animationProjectileRight = new Animation();
+
 
             _animationProjectileRight.AddFrame(new Rectangle(0, 0, 15, 7));
             _animationProjectileRight.AantalBewegingenPerSeconde = 0;

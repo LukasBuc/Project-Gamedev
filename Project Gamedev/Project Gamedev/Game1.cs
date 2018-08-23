@@ -22,8 +22,11 @@ namespace Project_Gamedev
         Collisions myCollisions;
         Vector2 campos = new Vector2();
 
-        Texture2D _projectileTexture;
-        Projectile playerProjectile;
+        Texture2D _playerProjectileTexture;
+        PlayerProjectiles myProjectiles;
+
+        //Projectile playerProjectile;
+
         bool projectileCreated = false;
 
         Camera2d camera;
@@ -62,8 +65,9 @@ namespace Project_Gamedev
             level1.texture = tileTexture;
             level1.CreateWorld();
 
-            _projectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
-            playerProjectile = new Projectile();
+            _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
+            myProjectiles = new PlayerProjectiles();
+            myProjectiles.texture = _playerProjectileTexture;
 
 
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
@@ -178,15 +182,29 @@ namespace Project_Gamedev
             //Schieten
             if (_player.fireProjectile)
             {
-                playerProjectile.CreateProjectile(_projectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.walkedleft);
+                myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.walkedleft);
+
                 projectileCreated = true;
-            }
+            }            
 
             if (projectileCreated)
             {
-                playerProjectile.Update(gameTime);            
-            }
+                myProjectiles.UpdatePlayerProjectiles(gameTime);
 
+                //projectile lijst wordt elke update opnieuw ingeladen
+                myCollisions.clearProjectileCollisions();
+
+                foreach (var item in myProjectiles.playerProjectileList)
+                {
+                    myCollisions.addProjectileCollisionObjects(item);
+                }
+
+                if (myCollisions.checkProjectileCollisions() != -1)
+                {
+                    myProjectiles.RemovePlayerProjectile(myCollisions.checkProjectileCollisions());
+                }
+            }
+            Console.WriteLine(gameTime.TotalGameTime.TotalSeconds);
             base.Update(gameTime);
         }
 
@@ -209,7 +227,7 @@ namespace Project_Gamedev
 
             if (projectileCreated)
             {
-                playerProjectile.Draw(spriteBatch);
+                myProjectiles.DrawPlayerProjectiles(spriteBatch);
             }
 
             spriteBatch.End();

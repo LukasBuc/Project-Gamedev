@@ -11,6 +11,7 @@ namespace Project_Gamedev.Classes
     {
         List<ICollide> mogelijkeCollisionObjecten;
         List<ICollide> collisionObjecten;
+        List<ICollide> projectileCollisionObjecten;
         public List<ICollide> bottomCollisions { get; set; }
         public List<ICollide> rightCollisions { get; set; }
         public List<ICollide> leftCollisions { get; set; }
@@ -21,6 +22,8 @@ namespace Project_Gamedev.Classes
         public Collisions()
         {
             mogelijkeCollisionObjecten = new List<ICollide>();
+
+            projectileCollisionObjecten = new List<ICollide>();
         }
 
         public void AddCollisionsObject(ICollide collisionRectangle)
@@ -89,6 +92,42 @@ namespace Project_Gamedev.Classes
                     topCollisions.Add(collisionObjecten[i]);
                 }
             }
+        }
+
+
+
+
+
+
+
+
+
+        //Projectile collisionobjecten toevoegen aan lijst
+        public void addProjectileCollisionObjects(ICollide collisionRectangle)
+        {
+            projectileCollisionObjecten.Add(collisionRectangle);
+        }
+
+        public int checkProjectileCollisions()
+        {
+            for (int i = 0; i < mogelijkeCollisionObjecten.Count; i++)
+            {
+                for (int j = 0; j < projectileCollisionObjecten.Count; j++)
+                {
+                    if (mogelijkeCollisionObjecten[i].GetCollisionRectangle().Intersects(projectileCollisionObjecten[j].GetCollisionRectangle()))
+                    {
+                        //Er is een collision tussen een tile en een projectiel
+                        return j;
+                    }
+                }
+                
+            }
+            return -1;
+        }
+
+        public void clearProjectileCollisions()
+        {
+            projectileCollisionObjecten.Clear();
         }
     }
 }

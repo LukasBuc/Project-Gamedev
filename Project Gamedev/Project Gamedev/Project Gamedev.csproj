@@ -48,6 +48,7 @@
     <Compile Include="Classes\Controls.cs" />
     <Compile Include="Classes\ICollide.cs" />
     <Compile Include="Classes\Level.cs" />
+    <Compile Include="Classes\PlayerProjectiles.cs" />
     <Compile Include="Classes\Projectile.cs" />
     <Compile Include="Classes\Tile.cs" />
     <Compile Include="Game1.cs" />
