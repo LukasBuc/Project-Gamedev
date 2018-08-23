@@ -9,19 +9,19 @@ namespace Project_Gamedev
 {
     public class Animation
     {
-        private List<AnimationFrame> frames;
+        private List<AnimationFrame> _frames;
         public AnimationFrame CurrentFrame { get; set; }
         public int AantalBewegingenPerSeconde { get; set; }
 
-        private int counter = 0;
+        private int _counter = 0;
 
-        private double x = 0;
-        public double offset {get; set;}
+        private double _x = 0;
+        public double Offset {get; set;}
         private int _totalWidth = 0;
 
         public Animation()
         {
-            frames = new List<AnimationFrame>();
+            _frames = new List<AnimationFrame>();
             AantalBewegingenPerSeconde = 1;
         }
 
@@ -31,10 +31,10 @@ namespace Project_Gamedev
             {
                 SourceRectangle = rectangle,
             };
-            frames.Add(newFrame);
-            CurrentFrame = frames[0];
-            offset = CurrentFrame.SourceRectangle.Width;
-            foreach (AnimationFrame f in frames)
+            _frames.Add(newFrame);
+            CurrentFrame = _frames[0];
+            Offset = CurrentFrame.SourceRectangle.Width;
+            foreach (AnimationFrame f in _frames)
             {
                 _totalWidth += f.SourceRectangle.Width;
             }
@@ -44,22 +44,22 @@ namespace Project_Gamedev
         {
             double temp = CurrentFrame.SourceRectangle.Width * ((double)gameTime.ElapsedGameTime.Milliseconds / 1000);
 
-            x += temp;
-            if (x >= CurrentFrame.SourceRectangle.Width / AantalBewegingenPerSeconde)
+            _x += temp;
+            if (_x >= CurrentFrame.SourceRectangle.Width / AantalBewegingenPerSeconde)
             {
-                Console.WriteLine(x);
-                x = 0;
-                counter++;
-                if (counter >= frames.Count)
+                Console.WriteLine(_x);
+                _x = 0;
+                _counter++;
+                if (_counter >= _frames.Count)
                 {
-                    counter = 0;
+                    _counter = 0;
                 }
-                CurrentFrame = frames[counter];
-                offset += CurrentFrame.SourceRectangle.Width;
+                CurrentFrame = _frames[_counter];
+                Offset += CurrentFrame.SourceRectangle.Width;
             }
-            if (offset >= _totalWidth)
+            if (Offset >= _totalWidth)
             {
-                offset = 0;
+                Offset = 0;
             }
         }
     }

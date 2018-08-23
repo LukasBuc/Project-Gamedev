@@ -10,14 +10,14 @@ namespace Project_Gamedev.Classes
 {
     public class Level
     {
-        public Texture2D texture;
+        public Texture2D Texture;
 
         public Level()
         {
             
         }
 
-        public byte[,] levelArray = new byte[,]
+        public byte[,] LevelArray = new byte[,]
         {
             {1,0,0,0,0,0,0,0,0,0 },
             {1,0,0,0,0,0,0,0,0,0 },
@@ -29,7 +29,7 @@ namespace Project_Gamedev.Classes
             {1,1,1,1,1,1,1,1,1,1 },
         };
 
-        public Tile[,] tileArray = new Tile[8, 10];
+        public Tile[,] TileArray = new Tile[8, 10];
 
         public void CreateWorld()
         {
@@ -37,9 +37,9 @@ namespace Project_Gamedev.Classes
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    if (levelArray[x,y] == 1)
+                    if (LevelArray[x,y] == 1)
                     {
-                        tileArray[x, y] = new Tile(texture, new Vector2(y * 64, x * 64)); // 128
+                        TileArray[x, y] = new Tile(Texture, new Vector2(y * 64, x * 64)); // 128
                     }
                 }
             }
@@ -51,9 +51,9 @@ namespace Project_Gamedev.Classes
             {
                 for (int y = 0; y < 10; y++)
                 {
-                    if (tileArray[x, y] != null)
+                    if (TileArray[x, y] != null)
                     {
-                        tileArray[x, y].Draw(spritebatch);
+                        TileArray[x, y].Draw(spritebatch);
                     }
                 }
             }

@@ -19,8 +19,7 @@ namespace Project_Gamedev
         //private Rectangle _ShowRect;
 
         //Schieten
-        public bool fireProjectile = false;
-
+        public bool FireProjectile = false;
 
         //Collisions
         public Rectangle CollisionRectangle;
@@ -32,22 +31,23 @@ namespace Project_Gamedev
         private Animation _animationIdleLeft;
         public Vector2 VelocityX = new Vector2(2, 0);
 
-        public bool walkedleft = false;
+        public bool PlayerWalkedLeft = false;
 
         //Controls
-        public Controls _controls { get; set; }
+        public Controls PlayerControls { get; set; }
 
-        public bool isGrounded { get; set; }
-        public bool collisionRight { get; set; }
-        public bool collisionLeft { get; set; }
-        public bool collisionTop { get; set; }
+        //Collisions
+        public bool IsGrounded { get; set; }
+        public bool CollisionRight { get; set; }
+        public bool CollisionLeft { get; set; }
+        public bool CollisionTop { get; set; }
 
         public Vector2 VelocityY = new Vector2(0, 2);
-        public Vector2 jumpVelocity = new Vector2(0, 7);
+        public Vector2 JumpVelocity = new Vector2(0, 7);
 
-        private float fallspeed = (float)0.5;
-        private bool jumping = false;
-        private int jumpCounter = 0;
+        private float _fallspeed = (float)0.5;
+        private bool _jumping = false;
+        private int _jumpCounter = 0;
 
         bool fired = false;
         bool jumped = false;
@@ -56,26 +56,24 @@ namespace Project_Gamedev
         const int playerHeight = 28;
         const int playerwidth = 20;
 
-        public bool movingLeft = false;
-        public bool movingRight = false;
+        public bool MovingLeft = false;
+        public bool MovingRight = false;
 
-        private Vector2 totaalFallSpeed;
+        private Vector2 _totaalFallSpeed;
 
         public Player(Texture2D _texture, Vector2 _positie)
         {
             Texture = _texture;
             Positie = _positie;
 
-            isGrounded = false;
-            collisionRight = false;
-            collisionLeft = false;
-            collisionTop = false;
-
-            //_ShowRect = new Rectangle(0, 0, playerwidth, playerHeight);
+            IsGrounded = false;
+            CollisionRight = false;
+            CollisionLeft = false;
+            CollisionTop = false;
 
             CollisionRectangle = new Rectangle((int)Positie.X, (int)Positie.Y, playerwidth, playerHeight);
 
-            _controls = new ControlArrows();
+            PlayerControls = new ControlArrows();
 
             _animationWalkRight = new Animation();
             _animationWalkLeft = new Animation();
@@ -111,77 +109,77 @@ namespace Project_Gamedev
         
         public void Update(GameTime gameTime)
         {
-            _controls.Update();
+            PlayerControls.Update();
             
             //Schieten
-            if (_controls.fire && !fired)
+            if (PlayerControls.Fire && !fired)
             {
-                fireProjectile = true;
+                FireProjectile = true;
                 fired = true;
             }
             else
             {
-                fireProjectile = false;              
+                FireProjectile = false;              
             }
 
             //zorgt ervoor dat je firekey moet loslaten voor je opnieuw kan schieten
-            if (!_controls.fire)
+            if (!PlayerControls.Fire)
             {               
                 fired = false;
             }
 
             //Bewegen links
-            if (_controls.left)
+            if (PlayerControls.Left)
             {
-                if (!collisionLeft)
+                if (!CollisionLeft)
                 {
                     Positie -= VelocityX;
-                    movingLeft = true;
+                    MovingLeft = true;
 
                     //Animation naar links wandelen
                     _animationWalkLeft.Update(gameTime);
 
                     //Walked left op true zetten zodat de idle animatie naar de juiste kant staat
-                    walkedleft = true;
+                    PlayerWalkedLeft = true;
                 }
                 else
                 {
-                    movingLeft = false;
+                    MovingLeft = false;
                 }
             }
             else
             {
-                movingLeft = false;
+                MovingLeft = false;
             }
 
             //Bewegen rechts
-            if (_controls.right)
+            if (PlayerControls.Right)
             {
-                if (!collisionRight)
+                if (!CollisionRight)
                 {
                     Positie += VelocityX;
-                    movingRight = true;
+                    MovingRight = true;
                     
                     //Animation naar rechts wandelen
                     _animationWalkRight.Update(gameTime);
 
                     //Walked left op false zetten zodat de idle animatie naar de juiste kant staat
-                    walkedleft = false;
+                    PlayerWalkedLeft = false;
                 }
                 else
                 {
-                    movingRight = false;
+                    MovingRight = false;
                 }
             }
             else
             {
-                movingRight = false;
+                MovingRight = false;
             }
 
             //Idle links/rechts
-            if (!_controls.left && !_controls.right && !_controls.jump)
+            if (!PlayerControls.Left && !PlayerControls.Right && !PlayerControls.Jump)
             {
-                if (walkedleft)
+                if (PlayerWalkedLeft)
                 {
                     _animationIdleLeft.Update(gameTime);
                 }
@@ -192,61 +190,63 @@ namespace Project_Gamedev
             }
 
             //Jump 
-            if (_controls.jump && isGrounded && !jumped)
+            if (PlayerControls.Jump && IsGrounded && !jumped)
             {
-                jumping = true;
+                _jumping = true;
                 jumped = true;
             }
 
             //zorgt ervoor dat je jumpkey moet loslaten voor je opnieuw springt
-            if (!_controls.jump)
+            if (!PlayerControls.Jump)
             {
                 jumped = false;
             }
 
             //Als we vanboven een collision raken
-            if (collisionTop)
+            if (CollisionTop)
             {
-                jumping = false;
-                jumpCounter = 0;
+                _jumping = false;
+                _jumpCounter = 0;
             }
 
             //Jump mechanics & velocity
-            if (jumping)
+            if (_jumping)
             {
-                if (jumpCounter > 11) //5
+                if (_jumpCounter > 11) //5
                 {
-                    jumping = false;
-                    jumpCounter = 0;
+                    _jumping = false;
+                    _jumpCounter = 0;
                 }
                 else
                 {
-                    Positie -= jumpVelocity;
-                    jumpCounter++;
+                    Positie -= JumpVelocity;
+                    _jumpCounter++;
                 }
             }
 
             //Zwaartekracht en valsnelheid
-            if (!isGrounded && !jumping)
+            if (!IsGrounded && !_jumping)
             {
                 //Zorgt ervoor dat we sneller vallen als we langer in de lucht blijven
-                totaalFallSpeed = VelocityY * fallspeed;
-                Positie += totaalFallSpeed;
-                fallspeed += (float)0.09;
+                _totaalFallSpeed = VelocityY * _fallspeed;
+                Positie += _totaalFallSpeed;
+                _fallspeed += (float)0.09;
             }
             else
             {
                 //Val snelheid resetten
-                fallspeed = (float)0.5;
-                totaalFallSpeed = VelocityY * fallspeed;
+                _fallspeed = (float)0.5;
+                _totaalFallSpeed = VelocityY * _fallspeed;
 
             }
 
+            //CollisionRectangle player updaten
             CollisionRectangle.X = (int)Positie.X;
             CollisionRectangle.Y = (int)Positie.Y;
         }
 
-        public void setCorrectHeigt(int collisionHeight)
+        //Hoogte van player juist zetten zodat die niet in voor een klein deel in objecten zit
+        public void SetCorrectHeigt(int collisionHeight)
         {
             Vector2 newPosition = new Vector2(Positie.X, collisionHeight - playerHeight);
             Positie = newPosition;
@@ -254,18 +254,17 @@ namespace Project_Gamedev
 
         public void Draw(SpriteBatch spritebatch)
         {
-
-            if (_controls.left)
+            if (PlayerControls.Left)
             {                
                 spritebatch.Draw(Texture, Positie, _animationWalkLeft.CurrentFrame.SourceRectangle, Color.AliceBlue);
             }
-            else if (_controls.right)
+            else if (PlayerControls.Right)
             {
                 spritebatch.Draw(Texture, Positie, _animationWalkRight.CurrentFrame.SourceRectangle, Color.AliceBlue);
             }
             else
             {
-                if (walkedleft)
+                if (PlayerWalkedLeft)
                 {
                     spritebatch.Draw(Texture, Positie, _animationIdleLeft.CurrentFrame.SourceRectangle, Color.AliceBlue);
                 }

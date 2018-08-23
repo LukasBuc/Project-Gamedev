@@ -14,10 +14,10 @@ namespace Project_Gamedev.Classes
         public Vector2 Position { get; set; }
         public Rectangle CollisionRectangle;
 
-        public Tile(Texture2D texture, Vector2 pos)
+        public Tile(Texture2D texture, Vector2 position)
         {
             _texture = texture;
-            Position = pos;
+            Position = position;
             CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 64, 64); //128
         }
 

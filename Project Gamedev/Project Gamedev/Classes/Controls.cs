@@ -9,10 +9,10 @@ namespace Project_Gamedev
 {
     public abstract class Controls
     {
-        public bool left { get; set; }
-        public bool right { get; set; }
-        public bool jump { get; set; }
-        public bool fire { get; set; }
+        public bool Left { get; set; }
+        public bool Right { get; set; }
+        public bool Jump { get; set; }
+        public bool Fire { get; set; }
         public abstract void Update();
     }
 
@@ -25,41 +25,41 @@ namespace Project_Gamedev
             //Check arrow links ingedrukt of niet
             if (stateKey.IsKeyDown(Keys.Left))
             {
-                left = true;
+                Left = true;
             }
             if (stateKey.IsKeyUp(Keys.Left))
             {
-                left = false;
+                Left = false;
             }
 
             //Check arrow rechts ingedrukt of niet
             if (stateKey.IsKeyDown(Keys.Right))
             {
-                right = true;
+                Right = true;
             }
             if (stateKey.IsKeyUp(Keys.Right))
             {
-                right = false;
+                Right = false;
             }
 
             //Check of spatie is ingedrukt of niet
             if (stateKey.IsKeyDown(Keys.Space))
             {
-                jump = true;
+                Jump = true;
             }
             if (stateKey.IsKeyUp(Keys.Space))
             {
-                jump = false;
+                Jump = false;
             }
 
             //Check of schieten is ingedrukt of niet
             if (stateKey.IsKeyDown(Keys.C))
             {
-                fire = true;
+                Fire = true;
             }
             if (stateKey.IsKeyUp(Keys.C))
             {
-                fire = false;
+                Fire = false;
             }
         }
     }

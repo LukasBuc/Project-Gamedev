@@ -12,12 +12,12 @@ namespace Project_Gamedev.Classes
         List<ICollide> mogelijkeCollisionObjecten;
         List<ICollide> collisionObjecten;
         List<ICollide> projectileCollisionObjecten;
-        public List<ICollide> bottomCollisions { get; set; }
-        public List<ICollide> rightCollisions { get; set; }
-        public List<ICollide> leftCollisions { get; set; }
-        public List<ICollide> topCollisions { get; set; }
+        public List<ICollide> BottomCollisions { get; set; }
+        public List<ICollide> RightCollisions { get; set; }
+        public List<ICollide> LeftCollisions { get; set; }
+        public List<ICollide> TopCollisions { get; set; }
 
-        public int bottomCollisionHeight { get; set; }
+        public int BottomCollisionHeight { get; set; }
 
         public Collisions()
         {
@@ -32,7 +32,7 @@ namespace Project_Gamedev.Classes
         }
 
         //Kijkt of er collisions zijn met de player en steekt deze in een lijst
-        public void getCollisionObjects(ICollide playerCollisionRectangle)
+        public void GetCollisionObjects(ICollide playerCollisionRectangle)
         {
             collisionObjecten = new List<ICollide>();
 
@@ -46,12 +46,12 @@ namespace Project_Gamedev.Classes
         }
 
         //TODO margin variabele toevoegen en cijfers proberen weghalen uit code
-        public void checkCollisions(ICollide playerCollisionRectangle)
+        public void CheckCollisions(ICollide playerCollisionRectangle)
         {
-            bottomCollisions = new List<ICollide>();
-            rightCollisions = new List<ICollide>();
-            leftCollisions = new List<ICollide>();
-            topCollisions = new List<ICollide>();
+            BottomCollisions = new List<ICollide>();
+            RightCollisions = new List<ICollide>();
+            LeftCollisions = new List<ICollide>();
+            TopCollisions = new List<ICollide>();
 
             for (int i = 0; i < collisionObjecten.Count; i++)
             {
@@ -61,8 +61,8 @@ namespace Project_Gamedev.Classes
                     playerCollisionRectangle.GetCollisionRectangle().Right >= collisionObjecten[i].GetCollisionRectangle().Left + 5 &&
                     playerCollisionRectangle.GetCollisionRectangle().Left <= collisionObjecten[i].GetCollisionRectangle().Right - 5)
                 {
-                    bottomCollisions.Add(collisionObjecten[i]);
-                    bottomCollisionHeight = collisionObjecten[i].GetCollisionRectangle().Top;
+                    BottomCollisions.Add(collisionObjecten[i]);
+                    BottomCollisionHeight = collisionObjecten[i].GetCollisionRectangle().Top;
                 }
 
                 //Check right
@@ -71,7 +71,7 @@ namespace Project_Gamedev.Classes
                     playerCollisionRectangle.GetCollisionRectangle().Bottom >= collisionObjecten[i].GetCollisionRectangle().Top + 8 &&
                     playerCollisionRectangle.GetCollisionRectangle().Top <= collisionObjecten[i].GetCollisionRectangle().Bottom - 8)
                 {
-                    rightCollisions.Add(collisionObjecten[i]);
+                    RightCollisions.Add(collisionObjecten[i]);
                 }
 
                 // Check left
@@ -80,7 +80,7 @@ namespace Project_Gamedev.Classes
                     playerCollisionRectangle.GetCollisionRectangle().Bottom >= collisionObjecten[i].GetCollisionRectangle().Top + 8 &&
                     playerCollisionRectangle.GetCollisionRectangle().Top <= collisionObjecten[i].GetCollisionRectangle().Bottom - 8)
                 {
-                    leftCollisions.Add(collisionObjecten[i]);
+                    LeftCollisions.Add(collisionObjecten[i]);
                 }
 
                 //Check top
@@ -89,26 +89,18 @@ namespace Project_Gamedev.Classes
                     playerCollisionRectangle.GetCollisionRectangle().Right >= collisionObjecten[i].GetCollisionRectangle().Left + 5 &&
                     playerCollisionRectangle.GetCollisionRectangle().Left <= collisionObjecten[i].GetCollisionRectangle().Right - 5)
                 {
-                    topCollisions.Add(collisionObjecten[i]);
+                    TopCollisions.Add(collisionObjecten[i]);
                 }
             }
         }
 
-
-
-
-
-
-
-
-
         //Projectile collisionobjecten toevoegen aan lijst
-        public void addProjectileCollisionObjects(ICollide collisionRectangle)
+        public void AddProjectileCollisionObjects(ICollide collisionRectangle)
         {
             projectileCollisionObjecten.Add(collisionRectangle);
         }
 
-        public int checkProjectileCollisions()
+        public int CheckProjectileCollisions()
         {
             for (int i = 0; i < mogelijkeCollisionObjecten.Count; i++)
             {
@@ -125,7 +117,7 @@ namespace Project_Gamedev.Classes
             return -1;
         }
 
-        public void clearProjectileCollisions()
+        public void ClearProjectileCollisions()
         {
             projectileCollisionObjecten.Clear();
         }

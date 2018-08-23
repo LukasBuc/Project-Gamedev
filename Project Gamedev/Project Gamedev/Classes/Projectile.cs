@@ -14,10 +14,10 @@ namespace Project_Gamedev.Classes
         public Vector2 Positie { get; set; }
         
         //Snelheid projectiel
-        private Vector2 VelocityX = new Vector2(5, 0);
+        private Vector2 _velocityX = new Vector2(5, 0);
 
         //Richting die wordt geschoten
-        private bool shootLeft;
+        private readonly bool _shootLeft;
 
         //Projectiel tonen
         private Texture2D Texture { get; set; }
@@ -49,11 +49,11 @@ namespace Project_Gamedev.Classes
             //Checken naar welke kant het projectiel moet vliegen
             if (lookingLeft)
             {
-                shootLeft = true;
+                _shootLeft = true;
             }
             else
             {
-                shootLeft = false;
+                _shootLeft = false;
             }
 
             CollisionRectangle = new Rectangle((int)Positie.X, (int)Positie.Y, 15, 7);
@@ -61,20 +61,20 @@ namespace Project_Gamedev.Classes
 
         public void Update(GameTime gameTime)
         {
-            if (shootLeft)
+            if (_shootLeft)
             {
-                Positie -= VelocityX;             
+                Positie -= _velocityX;             
             }
             else
             {
-                Positie += VelocityX;
+                Positie += _velocityX;
             }
             CollisionRectangle.X = (int)Positie.X;
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
-            if (shootLeft)
+            if (_shootLeft)
             {
                 spritebatch.Draw(Texture, Positie, _animationProjectileLeft.CurrentFrame.SourceRectangle, Color.AliceBlue);
                 

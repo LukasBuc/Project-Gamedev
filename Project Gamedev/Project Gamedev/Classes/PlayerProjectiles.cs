@@ -10,10 +10,10 @@ namespace Project_Gamedev.Classes
 {
     class PlayerProjectiles
     {
-        public Texture2D texture;
-        public List<Projectile> playerProjectileList = new List<Projectile>();
+        public Texture2D Texture;
+        public List<Projectile> PlayerProjectileList = new List<Projectile>();
 
-        private List<Projectile> projectilesToRemove;
+        private List<Projectile> _projectilesToRemove;
 
         public PlayerProjectiles()
         {
@@ -22,15 +22,15 @@ namespace Project_Gamedev.Classes
 
         public void AddPlayerProjectile(Texture2D _texture, Vector2 _positie, bool lookingLeft, double currentTime)
         {
-            if (playerProjectileList.Count < 10)
+            if (PlayerProjectileList.Count < 10)
             {
-                playerProjectileList.Add(new Projectile(_texture, _positie, lookingLeft, currentTime));
+                PlayerProjectileList.Add(new Projectile(_texture, _positie, lookingLeft, currentTime));
             }
         }
 
         public void DrawPlayerProjectiles(SpriteBatch spritebatch)
         {
-            foreach (var projectile in playerProjectileList)
+            foreach (var projectile in PlayerProjectileList)
             {
                 projectile.Draw(spritebatch);
             }
@@ -38,28 +38,27 @@ namespace Project_Gamedev.Classes
 
         public void UpdatePlayerProjectiles(GameTime gametime)
         {
-            projectilesToRemove = new List<Projectile>();
-            foreach (var projectile in playerProjectileList)
+            _projectilesToRemove = new List<Projectile>();
+            foreach (var projectile in PlayerProjectileList)
             {
                 projectile.Update(gametime);
 
                 //Projectiles die langer dan 1.5 seconden vliegen worden aan een lijst toegevoegd die later wordt verwijderd
                 if ((gametime.TotalGameTime.TotalSeconds - projectile.timeToLive) > 1.5)
                 {
-                    projectilesToRemove.Add(projectile);
+                    _projectilesToRemove.Add(projectile);
                 }
             }
 
             //Lijst projectiles die moeten worden verwijderd, worden hier verwijderd
-            for (int i = 0; i < projectilesToRemove.Count; i++)
+            for (int i = 0; i < _projectilesToRemove.Count; i++)
             {
-                playerProjectileList.Remove(projectilesToRemove[i]);
+                PlayerProjectileList.Remove(_projectilesToRemove[i]);
             }
         }
-
         public void RemovePlayerProjectile(int collideObject)
         {
-            playerProjectileList.RemoveAt(collideObject);
+            PlayerProjectileList.RemoveAt(collideObject);
         }
     }
 }
