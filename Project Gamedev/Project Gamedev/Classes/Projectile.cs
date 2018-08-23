@@ -23,20 +23,22 @@ namespace Project_Gamedev.Classes
         private Texture2D Texture { get; set; }
         private Animation _animationProjectileLeft;
         private Animation _animationProjectileRight;
-
-
-
         
         //Collision
         public Rectangle CollisionRectangle;
 
-        public Projectile(Texture2D _texture, Vector2 _positie, bool lookingLeft)
+        //Tijd dat projectiel leeft
+        public double timeToLive;
+
+        public Projectile(Texture2D _texture, Vector2 _positie, bool lookingLeft, double currentTime)
         {
             Texture = _texture;
             Positie = _positie;
             _animationProjectileLeft = new Animation();
             _animationProjectileRight = new Animation();
 
+            //Huidige tijd bijhouden zodat we later hiermee kunne rekenen
+            timeToLive = currentTime;
 
             _animationProjectileRight.AddFrame(new Rectangle(0, 0, 15, 7));
             _animationProjectileRight.AantalBewegingenPerSeconde = 0;

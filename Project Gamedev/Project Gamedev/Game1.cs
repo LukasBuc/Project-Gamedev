@@ -20,7 +20,7 @@ namespace Project_Gamedev
         Texture2D tileTexture;
         Level level1;
         Collisions myCollisions;
-        Vector2 campos = new Vector2();
+        Vector2 campos = new Vector2(-150, 100);
 
         Texture2D _playerProjectileTexture;
         PlayerProjectiles myProjectiles;
@@ -71,7 +71,7 @@ namespace Project_Gamedev
 
 
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
-            _player = new Player(_playerTexture, new Vector2(150, 100));
+            _player = new Player(_playerTexture, new Vector2(150, 100)); //150, 100
 
             
 
@@ -182,7 +182,7 @@ namespace Project_Gamedev
             //Schieten
             if (_player.fireProjectile)
             {
-                myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.walkedleft);
+                myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.walkedleft, gameTime.TotalGameTime.TotalSeconds);
 
                 projectileCreated = true;
             }            
