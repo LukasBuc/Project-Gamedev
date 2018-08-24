@@ -9,10 +9,7 @@ using System.Threading.Tasks;
 namespace Project_Gamedev.Classes
 {
     class Enemy : ICollide
-    {
-        static Random r = new Random();
-        bool walkingLeft = false;
-
+    {              
         //Positie
         public Vector2 Positie { get; set; }
 
@@ -35,16 +32,17 @@ namespace Project_Gamedev.Classes
         //Enemy info
         const int enemyHeight = 35;
         const int enemyWidth = 35;
+        bool walkingLeft = false;
 
         //Animations
         private Animation _animationWalkRight;
         private Animation _animationWalkLeft;
-        
+
+        static Random r = new Random();
+
         public Enemy(Texture2D _texture, Vector2 _positie)
         {
             //Random keuze voor welke kant hij begint met wandelen
-            //Random rand = new Random();
-            //Random rand = new Random();
             if (r.Next(0, 2) == 0)
             {
                 walkingLeft = true;
@@ -53,7 +51,6 @@ namespace Project_Gamedev.Classes
             {
                 walkingLeft = false;
             }
-
 
             Texture = _texture;
             Positie = _positie;
@@ -78,12 +75,11 @@ namespace Project_Gamedev.Classes
             _animationWalkLeft.AddFrame(new Rectangle(71, 90, 40, 35));
             _animationWalkLeft.AddFrame(new Rectangle(113, 90, 35, 35));
             _animationWalkLeft.AantalBewegingenPerSeconde = 8;
-
-
         }
 
         public void Update(GameTime gameTime)
         {
+            //Wandelen en collisions links, rechts
             EnemyWalk(gameTime);
 
             //Zwaartekracht

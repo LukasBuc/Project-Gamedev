@@ -27,11 +27,8 @@ namespace Project_Gamedev
         Collisions myCollisions;
         PlayerProjectiles myProjectiles;
         Camera2d camera;
-
-        //Enemy _enemyMinotaur;
-
         List<Enemy> _enemyMinotaurList;
- 
+
         Vector2 campos;
 
         public Game1()
@@ -69,8 +66,10 @@ namespace Project_Gamedev
             _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
 
             //Level inladen
-            _level1 = new Level();
-            _level1.Texture = _tileTexture;
+            _level1 = new Level
+            {
+                Texture = _tileTexture
+            };
             _level1.CreateWorld();
 
             //Player projectile object aanmaken en texture geven
@@ -80,14 +79,14 @@ namespace Project_Gamedev
             //Player object aanmaken 
             _player = new Player(_playerTexture, new Vector2(150, 100));
 
-            //Enemy object aanmaken
-            //_enemyMinotaur = new Enemy(_enemyMinotaurTexture, new Vector2(250, 280));
-
-            _enemyMinotaurList = new List<Enemy>();
-            _enemyMinotaurList.Add(new Enemy(_enemyMinotaurTexture, new Vector2(100, 300)));
-            _enemyMinotaurList.Add(new Enemy(_enemyMinotaurTexture, new Vector2(150, 300)));
-            _enemyMinotaurList.Add(new Enemy(_enemyMinotaurTexture, new Vector2(200, 300)));
-            _enemyMinotaurList.Add(new Enemy(_enemyMinotaurTexture, new Vector2(250, 300)));
+            //Enemy objects aanmaken
+            _enemyMinotaurList = new List<Enemy>
+            {
+                new Enemy(_enemyMinotaurTexture, new Vector2(100, 300)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(150, 300)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(200, 300)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(460, 100))
+            };
 
             //Collision object aanmaken
             myCollisions = new Collisions();
@@ -101,7 +100,7 @@ namespace Project_Gamedev
                 }
             }
 
-            //Camera
+            //Camera start positie
             campos = new Vector2(-150, 100);
         }
 
@@ -124,7 +123,7 @@ namespace Project_Gamedev
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //Update characters
+            #region Update characters
             _player.Update(gameTime);
 
             if (_enemyMinotaurList != null)
@@ -132,9 +131,27 @@ namespace Project_Gamedev
                 foreach (var enemy in _enemyMinotaurList)
                 {
                     enemy.Update(gameTime);
-                }                
-            }            
+                }
+            }
+            #endregion
 
+            #region player schieten
+            if (_player.FireProjectile)
+            {
+                myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.PlayerWalkedLeft, gameTime.TotalGameTime.TotalSeconds);
+            }
+
+            //projectile lijst wordt elke update opnieuw ingeladen
+            myCollisions.ClearProjectileCollisions();
+
+            //Projectiles toevoegen aan lijst voor collisions
+            foreach (var item in myProjectiles.PlayerProjectileList)
+            {
+                myCollisions.AddProjectileCollisionObjects(item);
+            }
+            #endregion
+
+            #region Collisions player
             //Controleren waar de collisions plaatsvinden
             myCollisions.CheckCollisions(_player);
 
@@ -184,8 +201,20 @@ namespace Project_Gamedev
             {
                 _player.CollisionTop = false;
             }
+            #endregion
 
-            //Collisions enemies controleren
+            #region player projectiles updaten & controleren
+            myProjectiles.UpdatePlayerProjectiles(gameTime);
+
+            //Controleren of er een collision is met de level tiles
+            int collisionIndex = myCollisions.CheckProjectileCollisions();
+            if (collisionIndex != -1)
+            {
+                myProjectiles.RemovePlayerProjectile(collisionIndex);
+            }
+            #endregion
+
+            #region Collisions enemies controleren
             if (_enemyMinotaurList != null)
             {
                 foreach (var enemy in _enemyMinotaurList)
@@ -218,10 +247,25 @@ namespace Project_Gamedev
                     {
                         enemy.CollisionRight = false;
                     }
+                    //enemy playerprojectile collision
+                    collisionIndex = myCollisions.CheckEnemyPlayerProjectileHit(enemy);
+                    if (collisionIndex != -1)
+                    {
+                        myProjectiles.RemovePlayerProjectile(collisionIndex);
+                        _enemyMinotaurList.Remove(enemy);
+                        break;
+                    }
+
+                    //Player enemy collision
+                    if (myCollisions.CheckEnemyPlayerCollision(_player, enemy))
+                    {
+                        //_player.Reset();
+                        //campos = new Vector2(-150, 100);
+                        LoadContent();
+                    }
                 }
-                
             }
-            
+            #endregion
 
             //Camera positie
             if (_player.MovingRight)
@@ -232,65 +276,6 @@ namespace Project_Gamedev
             if (_player.MovingLeft)
             {
                 campos -= _player.VelocityX;
-            }
-
-            //Schieten
-            if (_player.FireProjectile)
-            {
-                myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.PlayerWalkedLeft, gameTime.TotalGameTime.TotalSeconds);
-            }
-
-
-            //projectile lijst wordt elke update opnieuw ingeladen
-            myCollisions.ClearProjectileCollisions();
-
-            //Projectiles toevoegen aan lijst voor collisions
-            foreach (var item in myProjectiles.PlayerProjectileList)
-            {
-                myCollisions.AddProjectileCollisionObjects(item);
-            }
-
-            //Controleren of er een collision is met de level tiles
-            int collisionIndex = myCollisions.CheckProjectileCollisions();
-            if (collisionIndex != -1)
-            {
-                myProjectiles.RemovePlayerProjectile(collisionIndex);
-            }
-
-            //Controleren of er een projectilecollision is met een enemy
-            if (_enemyMinotaurList != null)
-            {
-                foreach (var enemy in _enemyMinotaurList)
-                {
-                    collisionIndex = myCollisions.CheckEnemyPlayerProjectileHit(enemy);
-                    if (collisionIndex != -1)
-                    {
-                        myProjectiles.RemovePlayerProjectile(collisionIndex);
-                        //enemy = null;
-                        _enemyMinotaurList.Remove(enemy);
-                        break;
-                    }
-                    
-                }
-
-            }
-
-            //Update playerprojectiles
-            myProjectiles.UpdatePlayerProjectiles(gameTime);
-
-            if (_enemyMinotaurList != null)
-            {
-                foreach (var enemy in _enemyMinotaurList)
-                {
-                    //Controleren of player met enemy collision heeft
-                    if (myCollisions.CheckEnemyPlayerCollision(_player, enemy))
-                    {
-                        //_player.Reset();
-                        //campos = new Vector2(-150, 100);
-                        LoadContent();
-                    }
-                }
-                
             }
 
             base.Update(gameTime);
@@ -307,12 +292,12 @@ namespace Project_Gamedev
             var viewMatrix = camera.GetViewMatrix();
             camera.Position = campos;
 
-
             spriteBatch.Begin(transformMatrix: viewMatrix);
 
             _level1.DrawLevel(spriteBatch);
             _player.Draw(spriteBatch);
 
+            //Als er enemy minotaurs zijn ze tonen
             if (_enemyMinotaurList != null)
             {
                 foreach (var enemy in _enemyMinotaurList)
@@ -320,7 +305,7 @@ namespace Project_Gamedev
                     enemy.Draw(spriteBatch);
                 }
             }
-            
+
             myProjectiles.DrawPlayerProjectiles(spriteBatch);
 
             spriteBatch.End();

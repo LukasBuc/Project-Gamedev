@@ -29,10 +29,7 @@ namespace Project_Gamedev
         private Animation _animationWalkLeft;
         private Animation _animationIdleRight;
         private Animation _animationIdleLeft;
-        public Vector2 VelocityX = new Vector2(2, 0);
-
-        public bool PlayerWalkedLeft = false;
-
+        
         //Controls
         public Controls PlayerControls { get; set; }
 
@@ -41,25 +38,26 @@ namespace Project_Gamedev
         public bool CollisionRight { get; set; }
         public bool CollisionLeft { get; set; }
         public bool CollisionTop { get; set; }
-
+                       
+        //Player info      
+        public Vector2 VelocityX = new Vector2(2.6f, 0);
         public Vector2 VelocityY = new Vector2(0, 2);
-        public Vector2 JumpVelocity = new Vector2(0, 7);
+        public Vector2 JumpVelocity = new Vector2(0, 7f);
 
+        private Vector2 _totaalFallSpeed;
         private float _fallspeed = (float)0.5;
         private bool _jumping = false;
         private int _jumpCounter = 0;
 
-        bool fired = false;
-        bool jumped = false;
-
-        //Player info
-        const int playerHeight = 28;
-        const int playerwidth = 20;
-
         public bool MovingLeft = false;
         public bool MovingRight = false;
+        public bool PlayerWalkedLeft = false;
 
-        private Vector2 _totaalFallSpeed;
+        const int playerHeight = 28;
+        const int playerwidth = 20;
+             
+        bool fired = false;
+        bool jumped = false;
 
         public Player(Texture2D _texture, Vector2 _positie)
         {
