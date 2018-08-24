@@ -103,6 +103,23 @@ namespace Project_Gamedev.Classes
             return -1;
         }
 
+        public int CheckEnemyPlayerProjectileHit(ICollide EnemyCollisionRectangle)
+        {
+            for (int i = 0; i < projectileCollisionObjecten.Count; i++)
+            {
+                if (EnemyCollisionRectangle.GetCollisionRectangle().Intersects(projectileCollisionObjecten[i].GetCollisionRectangle()))
+                {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        //public bool CheckEnemyPlayerCollision(ICollide PlayerCollisionRectangle, ICollide EnemyCollisionRectangle)
+        //{
+
+        //}
+
         public void ClearProjectileCollisions()
         {
             projectileCollisionObjecten.Clear();

@@ -116,7 +116,12 @@ namespace Project_Gamedev
 
             //Update characters
             _player.Update(gameTime);
-            _enemyMinotaur.Update(gameTime);
+
+            if (_enemyMinotaur != null)
+            {
+                _enemyMinotaur.Update(gameTime);
+            }
+            
 
             //Controleren waar de collisions plaatsvinden
             myCollisions.CheckCollisions(_player);
@@ -169,34 +174,38 @@ namespace Project_Gamedev
             }
 
             //Collisions enemies controleren
-            myCollisions.CheckCollisions(_enemyMinotaur);
-            if (myCollisions.BottomCollisions.Count > 0)
+            if (_enemyMinotaur != null)
             {
-                _enemyMinotaur.IsGrounded = true;
-                _enemyMinotaur.setCorrectHeight(myCollisions.BottomCollisionHeight);
-            }
-            else
-            {
-                _enemyMinotaur.IsGrounded = false;
-            }
+                myCollisions.CheckCollisions(_enemyMinotaur);
+                if (myCollisions.BottomCollisions.Count > 0)
+                {
+                    _enemyMinotaur.IsGrounded = true;
+                    _enemyMinotaur.setCorrectHeight(myCollisions.BottomCollisionHeight);
+                }
+                else
+                {
+                    _enemyMinotaur.IsGrounded = false;
+                }
 
-            if (myCollisions.LeftCollisions.Count > 0)
-            {
-                _enemyMinotaur.CollisionLeft = true;
-            }
-            else
-            {
-                _enemyMinotaur.CollisionLeft = false;
-            }
+                if (myCollisions.LeftCollisions.Count > 0)
+                {
+                    _enemyMinotaur.CollisionLeft = true;
+                }
+                else
+                {
+                    _enemyMinotaur.CollisionLeft = false;
+                }
 
-            if (myCollisions.RightCollisions.Count > 0)
-            {
-                _enemyMinotaur.CollisionRight = true;
+                if (myCollisions.RightCollisions.Count > 0)
+                {
+                    _enemyMinotaur.CollisionRight = true;
+                }
+                else
+                {
+                    _enemyMinotaur.CollisionRight = false;
+                }
             }
-            else
-            {
-                _enemyMinotaur.CollisionRight = false;
-            }
+            
 
             //Camera positie
             if (_player.MovingRight)
@@ -226,9 +235,21 @@ namespace Project_Gamedev
             }
 
             //Controleren of er een collision is met de level tiles
-            if (myCollisions.CheckProjectileCollisions() != -1)
+            int collisionIndex = myCollisions.CheckProjectileCollisions();
+            if (collisionIndex != -1)
             {
-                myProjectiles.RemovePlayerProjectile(myCollisions.CheckProjectileCollisions());
+                myProjectiles.RemovePlayerProjectile(collisionIndex);
+            }
+
+            //Controleren of er een collision is met een enemy
+            if (_enemyMinotaur != null)
+            {
+                collisionIndex = myCollisions.CheckEnemyPlayerProjectileHit(_enemyMinotaur);
+                if (collisionIndex != -1)
+                {
+                    myProjectiles.RemovePlayerProjectile(collisionIndex);
+                    _enemyMinotaur = null;
+                }
             }
 
             //Update playerprojectiles
@@ -253,8 +274,12 @@ namespace Project_Gamedev
 
             _level1.DrawLevel(spriteBatch);
             _player.Draw(spriteBatch);
-            _enemyMinotaur.Draw(spriteBatch);
 
+            if (_enemyMinotaur != null)
+            {
+                _enemyMinotaur.Draw(spriteBatch);
+            }
+            
             myProjectiles.DrawPlayerProjectiles(spriteBatch);
 
             spriteBatch.End();
