@@ -84,7 +84,6 @@ namespace Project_Gamedev.Classes
 
         public void Update(GameTime gameTime)
         {
-            //_animationIdleRight.Update(gameTime);
             EnemyWalk(gameTime);
 
             //Zwaartekracht
@@ -143,6 +142,12 @@ namespace Project_Gamedev.Classes
             {
                 spritebatch.Draw(Texture, Positie, _animationWalkRight.CurrentFrame.SourceRectangle, Color.AliceBlue);
             }           
+        }
+
+        public void setCorrectHeight(int collisionHeight)
+        {
+            Vector2 newPosition = new Vector2(Positie.X, collisionHeight - enemyHeight);
+            Positie = newPosition;
         }
 
         public Rectangle GetCollisionRectangle()

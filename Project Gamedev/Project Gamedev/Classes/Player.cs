@@ -246,7 +246,7 @@ namespace Project_Gamedev
         }
 
         //Hoogte van player juist zetten zodat die niet in voor een klein deel in objecten zit
-        public void SetCorrectHeigt(int collisionHeight)
+        public void SetCorrectHeight(int collisionHeight)
         {
             Vector2 newPosition = new Vector2(Positie.X, collisionHeight - playerHeight);
             Positie = newPosition;

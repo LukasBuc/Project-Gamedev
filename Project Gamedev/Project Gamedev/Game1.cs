@@ -128,7 +128,7 @@ namespace Project_Gamedev
                 _player.IsGrounded = true;
 
                 //Y positie juist zetten zodat player niet in de grond zit
-                _player.SetCorrectHeigt(myCollisions.BottomCollisionHeight);
+                _player.SetCorrectHeight(myCollisions.BottomCollisionHeight);
             }
             else
             {
@@ -173,6 +173,7 @@ namespace Project_Gamedev
             if (myCollisions.BottomCollisions.Count > 0)
             {
                 _enemyMinotaur.IsGrounded = true;
+                _enemyMinotaur.setCorrectHeight(myCollisions.BottomCollisionHeight);
             }
             else
             {
