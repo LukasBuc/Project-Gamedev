@@ -10,7 +10,7 @@ namespace Project_Gamedev.Classes
 {
     class Enemy : ICollide
     {
-        readonly Random rand;
+        static Random r = new Random();
         bool walkingLeft = false;
 
         //Positie
@@ -36,16 +36,16 @@ namespace Project_Gamedev.Classes
         const int enemyHeight = 35;
         const int enemyWidth = 35;
 
-        //TODO ANIMATIONS TOEVOEGEN
-        private Animation _animationIdleRight;
+        //Animations
         private Animation _animationWalkRight;
         private Animation _animationWalkLeft;
         
         public Enemy(Texture2D _texture, Vector2 _positie)
         {
             //Random keuze voor welke kant hij begint met wandelen
-            rand = new Random();
-            if (rand.Next(0, 2) == 0)
+            //Random rand = new Random();
+            //Random rand = new Random();
+            if (r.Next(0, 2) == 0)
             {
                 walkingLeft = true;
             }

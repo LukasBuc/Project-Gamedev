@@ -275,6 +275,11 @@ namespace Project_Gamedev
             }
         }
 
+        public void Reset()
+        {
+            Positie = new Vector2(150, 100);
+        }
+
         public Rectangle GetCollisionRectangle()
         {
             return CollisionRectangle;
