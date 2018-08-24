@@ -19,6 +19,7 @@ namespace Project_Gamedev
         Texture2D _playerTexture;
         Texture2D _tileTexture;
         Texture2D _playerProjectileTexture;
+        Texture2D _enemyMinotaurTexture;
 
         //Objecten
         Player _player;
@@ -26,6 +27,8 @@ namespace Project_Gamedev
         Collisions myCollisions;
         PlayerProjectiles myProjectiles;
         Camera2d camera;
+
+        Enemy _enemyMinotaur;
 
         //Start positie camera
         Vector2 campos = new Vector2(-150, 100);
@@ -62,6 +65,7 @@ namespace Project_Gamedev
             _tileTexture = Content.Load<Texture2D>("Sprites\\Tiles\\TileSmall (1)");
             _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
+            _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
 
             //Level inladen
             _level1 = new Level();
@@ -74,6 +78,9 @@ namespace Project_Gamedev
 
             //Player object aanmaken 
             _player = new Player(_playerTexture, new Vector2(150, 100));
+
+            //Enemy object aanmaken
+            _enemyMinotaur = new Enemy(_enemyMinotaurTexture, new Vector2(250, 350));
 
             //Collision object aanmaken
             myCollisions = new Collisions();
@@ -217,6 +224,7 @@ namespace Project_Gamedev
 
             _level1.DrawLevel(spriteBatch);
             _player.Draw(spriteBatch);
+            _enemyMinotaur.Draw(spriteBatch);
 
             myProjectiles.DrawPlayerProjectiles(spriteBatch);
 
