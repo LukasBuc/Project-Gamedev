@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Projectiles/fireball.png</SourceFile>
-  <SourceTime>2018-08-24T09:19:33.8321276+02:00</SourceTime>
+  <SourceTime>2018-08-24T10:51:17.4331752+02:00</SourceTime>
   <DestFile>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/bin/Windows/Sprites/Projectiles/fireball.xnb</DestFile>
-  <DestTime>2018-08-24T10:17:44.5857754+02:00</DestTime>
+  <DestTime>2018-08-24T10:51:39.3543086+02:00</DestTime>
   <Importer>TextureImporter</Importer>
-  <ImporterTime>2017-09-27T03:32:24+02:00</ImporterTime>
+  <ImporterTime>2017-03-01T16:05:36+01:00</ImporterTime>
   <Processor>TextureProcessor</Processor>
-  <ProcessorTime>2017-09-27T03:32:24+02:00</ProcessorTime>
+  <ProcessorTime>2017-03-01T16:05:36+01:00</ProcessorTime>
   <Parameters>
     <Key>ColorKeyColor</Key>
     <Value>255,0,255,255</Value>

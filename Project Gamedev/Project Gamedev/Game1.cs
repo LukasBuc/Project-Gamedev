@@ -80,7 +80,7 @@ namespace Project_Gamedev
             _player = new Player(_playerTexture, new Vector2(150, 100));
 
             //Enemy object aanmaken
-            _enemyMinotaur = new Enemy(_enemyMinotaurTexture, new Vector2(250, 350));
+            _enemyMinotaur = new Enemy(_enemyMinotaurTexture, new Vector2(250, 280));
 
             //Collision object aanmaken
             myCollisions = new Collisions();
@@ -114,10 +114,9 @@ namespace Project_Gamedev
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            //Update characters
             _player.Update(gameTime);
-
-            //Tiles ophalen die ergens een collision hebben met de speler
-            myCollisions.GetCollisionObjects(_player);
+            _enemyMinotaur.Update(gameTime);
 
             //Controleren waar de collisions plaatsvinden
             myCollisions.CheckCollisions(_player);
@@ -167,6 +166,35 @@ namespace Project_Gamedev
             else
             {
                 _player.CollisionTop = false;
+            }
+
+            //Collisions enemies controleren
+            myCollisions.CheckCollisions(_enemyMinotaur);
+            if (myCollisions.BottomCollisions.Count > 0)
+            {
+                _enemyMinotaur.IsGrounded = true;
+            }
+            else
+            {
+                _enemyMinotaur.IsGrounded = false;
+            }
+
+            if (myCollisions.LeftCollisions.Count > 0)
+            {
+                _enemyMinotaur.CollisionLeft = true;
+            }
+            else
+            {
+                _enemyMinotaur.CollisionLeft = false;
+            }
+
+            if (myCollisions.RightCollisions.Count > 0)
+            {
+                _enemyMinotaur.CollisionRight = true;
+            }
+            else
+            {
+                _enemyMinotaur.CollisionRight = false;
             }
 
             //Camera positie

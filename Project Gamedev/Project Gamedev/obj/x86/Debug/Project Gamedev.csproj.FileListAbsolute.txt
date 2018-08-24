@@ -59,3 +59,14 @@ C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\D
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.exe
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.pdb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Characters\Enemy\Minotaur sprite.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Characters\WalkLeft.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Content\Sprites\Tiles\Tile (1).xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Content\Sprites\Tiles\Tile (2).xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Content\Sprites\Tiles\Tile (3).xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Content\Sprites\Tiles\TileSmall (1).xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Content\Sprites\Projectiles\fireball.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Content\Sprites\Characters\Player\Player sprite.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Content\Sprites\Characters\Enemy\Minotaur sprite.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml

@@ -10,6 +10,9 @@ namespace Project_Gamedev.Classes
 {
     class Enemy : ICollide
     {
+        readonly Random rand;
+        bool walkingLeft = false;
+
         //Positie
         public Vector2 Positie { get; set; }
 
@@ -20,8 +23,11 @@ namespace Project_Gamedev.Classes
         public Rectangle CollisionRectangle;
 
         public bool IsGrounded { get; set; }
+        public bool CollisionRight { get; set; }
+        public bool CollisionLeft { get; set; }
 
         public Vector2 VelocityY = new Vector2(0, 2);
+        public Vector2 VelocityX = new Vector2(2, 0);
 
         private float _fallspeed = (float)0.5;
         private Vector2 _totalFallSpeed;
@@ -32,32 +38,112 @@ namespace Project_Gamedev.Classes
 
         //TODO ANIMATIONS TOEVOEGEN
         private Animation _animationIdleRight;
+        private Animation _animationWalkRight;
+        private Animation _animationWalkLeft;
         
         public Enemy(Texture2D _texture, Vector2 _positie)
         {
+            //Random keuze voor welke kant hij begint met wandelen
+            rand = new Random();
+            if (rand.Next(0, 2) == 0)
+            {
+                walkingLeft = true;
+            }
+            else
+            {
+                walkingLeft = false;
+            }
+
+
             Texture = _texture;
             Positie = _positie;
 
+            IsGrounded = false;
+            CollisionLeft = false;
+            CollisionRight = false;
+
             CollisionRectangle = new Rectangle((int)Positie.X, (int)Positie.Y, enemyWidth, enemyHeight);
 
-            _animationIdleRight = new Animation();
+            _animationWalkRight = new Animation();
+            _animationWalkLeft = new Animation();
 
-            _animationIdleRight.AddFrame(new Rectangle(0, 47, 36, 35));
-            _animationIdleRight.AddFrame(new Rectangle(37, 47, 36, 35));
-            _animationIdleRight.AantalBewegingenPerSeconde = 8;
+            _animationWalkRight.AddFrame(new Rectangle(0, 0, 33, 35));
+            _animationWalkRight.AddFrame(new Rectangle(34, 0, 36, 35));
+            _animationWalkRight.AddFrame(new Rectangle(71, 0, 40, 35));
+            _animationWalkRight.AddFrame(new Rectangle(113, 0, 35, 35));
+            _animationWalkRight.AantalBewegingenPerSeconde = 8;
+
+            _animationWalkLeft.AddFrame(new Rectangle(0, 90, 33, 35));
+            _animationWalkLeft.AddFrame(new Rectangle(33, 90, 37, 35));
+            _animationWalkLeft.AddFrame(new Rectangle(71, 90, 40, 35));
+            _animationWalkLeft.AddFrame(new Rectangle(113, 90, 35, 35));
+            _animationWalkLeft.AantalBewegingenPerSeconde = 8;
+
 
         }
 
         public void Update(GameTime gameTime)
         {
-            _animationIdleRight.Update(gameTime);
+            //_animationIdleRight.Update(gameTime);
+            EnemyWalk(gameTime);
+
+            //Zwaartekracht
+            if (!IsGrounded)
+            {
+                _totalFallSpeed = VelocityY * _fallspeed;
+                Positie += _totalFallSpeed;
+                _fallspeed += (float)0.09;
+            }
+            else
+            {
+                _fallspeed = (float)0.5;
+                _totalFallSpeed = VelocityY * _fallspeed;
+            }
+
+            //CollisionRectangle enemy updaten
+            CollisionRectangle.X = (int)Positie.X;
+            CollisionRectangle.Y = (int)Positie.Y;
+        }
+
+        public void EnemyWalk(GameTime gameTime)
+        {
+            if (walkingLeft)
+            {
+                if (!CollisionLeft)
+                {
+                    Positie -= VelocityX;
+                    _animationWalkLeft.Update(gameTime);
+                }
+                else
+                {
+                    walkingLeft = false;
+                }
+            }
+            else
+            {
+                if (!CollisionRight)
+                {
+                    Positie += VelocityX;
+                    _animationWalkRight.Update(gameTime);
+                }
+                else
+                {
+                    walkingLeft = true;
+                }
+            }
         }
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(Texture, Positie, _animationIdleRight.CurrentFrame.SourceRectangle, Color.AliceBlue);
+            if (walkingLeft)
+            {
+                spritebatch.Draw(Texture, Positie, _animationWalkLeft.CurrentFrame.SourceRectangle, Color.AliceBlue);
+            }
+            else
+            {
+                spritebatch.Draw(Texture, Positie, _animationWalkRight.CurrentFrame.SourceRectangle, Color.AliceBlue);
+            }           
         }
-        
 
         public Rectangle GetCollisionRectangle()
         {
