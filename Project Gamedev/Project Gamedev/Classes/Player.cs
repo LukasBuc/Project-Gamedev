@@ -16,7 +16,6 @@ namespace Project_Gamedev
 
         //Tonen van player
         private Texture2D Texture { get; set; }
-        //private Rectangle _ShowRect;
 
         //Schieten
         public bool FireProjectile = false;

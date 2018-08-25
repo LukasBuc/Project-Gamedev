@@ -15,6 +15,20 @@ namespace Project_Gamedev
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        enum GameState
+        {
+            MainMenu,
+            Controls,
+            Level1,
+            Level2
+        }
+        GameState CurrentGameState = GameState.MainMenu;
+
+        //Main menu
+        Button _mainStartButton;
+        Button _mainControlsButton;
+        Button _controlsBackButton;
+
         //Textures
         Texture2D _playerTexture;
         Texture2D _groundTileLeft;
@@ -32,6 +46,9 @@ namespace Project_Gamedev
         Texture2D _playerProjectileTexture;
         Texture2D _enemyMinotaurTexture;
 
+        //Images
+        Image _controlsLayout;
+
         //Objecten
         Player _player;
         Level _level1;
@@ -41,6 +58,8 @@ namespace Project_Gamedev
         List<Enemy> _enemyMinotaurList;
 
         Vector2 campos;
+
+        MouseState mouse;
 
         public Game1()
         {
@@ -58,6 +77,8 @@ namespace Project_Gamedev
         {
             // TODO: Add your initialization logic here
             base.Initialize();
+            IsMouseVisible = true;
+            
             camera = new Camera2d(GraphicsDevice.Viewport);
         }
 
@@ -70,7 +91,17 @@ namespace Project_Gamedev
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            //Textures inladen
+            _mainStartButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonPlay"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonPlayHover"), new Vector2(200, 100));
+            _mainControlsButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonControls"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonControlsHover"), new Vector2(200, 300));
+            _controlsBackButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonBack"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonBackHover"), new Vector2(200, 300));
+
+            _controlsLayout = new Image(Content.Load<Texture2D>("Sprites\\Extra\\ControlsLayout"), new Vector2(150, 50));
+
+            _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
+            _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
+            _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
+
+            #region Tile textures inladen
             _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
             _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
             _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
@@ -83,11 +114,11 @@ namespace Project_Gamedev
             _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
             _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
             _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
-            _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
-            _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
-            _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
+           
+            #endregion
 
             //Level inladen
+            #region Level inladen
             _level1 = new Level();
 
             _level1.AddTextures(_groundTileLeft);       // 0
@@ -103,6 +134,8 @@ namespace Project_Gamedev
             _level1.AddTextures(_dirtTileWallMiddle);   // 10
             _level1.AddTextures(_dirtTileWallRight);    // 11
             _level1.CreateWorld();
+            #endregion
+
 
             //Player projectile object aanmaken en texture geven
             myProjectiles = new PlayerProjectiles();
@@ -157,167 +190,213 @@ namespace Project_Gamedev
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            #region Update characters
-            _player.Update(gameTime);
-
-            if (_enemyMinotaurList != null)
+            switch (CurrentGameState)
             {
-                foreach (var enemy in _enemyMinotaurList)
-                {
-                    enemy.Update(gameTime);
-                }
-            }
-            #endregion
+                #region Main menu
+                case GameState.MainMenu:
+                    mouse = Mouse.GetState();
 
-            #region player schieten
-            if (_player.FireProjectile)
-            {
-                myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.PlayerWalkedLeft, gameTime.TotalGameTime.TotalSeconds);
-            }
+                    if (_mainStartButton.buttonClicked)
+                    {
+                        CurrentGameState = GameState.Level1;
+                        IsMouseVisible = false;
+                        _mainStartButton.buttonClicked = false;
+                    }
 
-            //projectile lijst wordt elke update opnieuw ingeladen
-            myCollisions.ClearProjectileCollisions();
+                    if (_mainControlsButton.buttonClicked)
+                    {
+                        CurrentGameState = GameState.Controls;
+                        _mainControlsButton.buttonClicked = false;
+                    }
+                    _mainStartButton.Update(mouse);
+                    _mainControlsButton.Update(mouse);
+                    break;
+                #endregion
 
-            //Projectiles toevoegen aan lijst voor collisions
-            foreach (var item in myProjectiles.PlayerProjectileList)
-            {
-                myCollisions.AddProjectileCollisionObjects(item);
-            }
-            #endregion
+                #region Controls
+                case GameState.Controls:
+                    mouse = Mouse.GetState();
 
-            #region Collisions player
-            //Controleren waar de collisions plaatsvinden
-            myCollisions.CheckCollisions(_player);
+                    if (_controlsBackButton.buttonClicked)
+                    {
+                        CurrentGameState = GameState.MainMenu;
+                        _controlsBackButton.buttonClicked = false;
+                    }
+                    _controlsBackButton.Update(mouse);
+                    break;
+                #endregion
 
-            //Collisions bottom controleren
-            if (myCollisions.BottomCollisions.Count > 0)
-            {
-                Console.WriteLine("GROUNDED");
-                _player.IsGrounded = true;
+                #region Level1
+                case GameState.Level1:
+                    #region Update characters
+                    _player.Update(gameTime);
 
-                //Y positie juist zetten zodat player niet in de grond zit
-                _player.SetCorrectHeight(myCollisions.BottomCollisionHeight);
-            }
-            else
-            {
-                _player.IsGrounded = false;
-            }
+                    if (_enemyMinotaurList != null)
+                    {
+                        foreach (var enemy in _enemyMinotaurList)
+                        {
+                            enemy.Update(gameTime);
+                        }
+                    }
+                    #endregion
 
-            //Collisions rechts controlleren
-            if (myCollisions.RightCollisions.Count > 0)
-            {
-                Console.WriteLine("RIGHT COLLISION");
-                _player.CollisionRight = true;
-            }
-            else
-            {
-                _player.CollisionRight = false;
-            }
+                    #region player schieten
+                    if (_player.FireProjectile)
+                    {
+                        myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.PlayerWalkedLeft, gameTime.TotalGameTime.TotalSeconds);
+                    }
 
-            //Collisions left controleren
-            if (myCollisions.LeftCollisions.Count > 0)
-            {
-                Console.WriteLine("LEFT COLLISION");
-                _player.CollisionLeft = true;
-            }
-            else
-            {
-                _player.CollisionLeft = false;
-            }
+                    //projectile lijst wordt elke update opnieuw ingeladen
+                    myCollisions.ClearProjectileCollisions();
 
-            //Collision top controleren
-            //if (myCollisions.TopCollisions.Count > 0)
-            //{
-            //    Console.WriteLine("TOP COLLISION");
-            //    _player.CollisionTop = true;
-            //}
-            //else
-            //{
-            //    _player.CollisionTop = false;
-            //}
-            #endregion
+                    //Projectiles toevoegen aan lijst voor collisions
+                    foreach (var item in myProjectiles.PlayerProjectileList)
+                    {
+                        myCollisions.AddProjectileCollisionObjects(item);
+                    }
+                    #endregion
 
-            #region player projectiles updaten & controleren
-            myProjectiles.UpdatePlayerProjectiles(gameTime);
+                    #region Collisions player
+                    //Controleren waar de collisions plaatsvinden
+                    myCollisions.CheckCollisions(_player);
 
-            //Controleren of er een collision is met de level tiles
-            int collisionIndex = myCollisions.CheckProjectileCollisions();
-            if (collisionIndex != -1)
-            {
-                myProjectiles.RemovePlayerProjectile(collisionIndex);
-            }
-            #endregion
-
-            #region Collisions enemies controleren
-            if (_enemyMinotaurList != null)
-            {
-                foreach (var enemy in _enemyMinotaurList)
-                {
-                    myCollisions.CheckCollisions(enemy);
+                    //Collisions bottom controleren
                     if (myCollisions.BottomCollisions.Count > 0)
                     {
-                        enemy.IsGrounded = true;
-                        enemy.setCorrectHeight(myCollisions.BottomCollisionHeight);
+                        Console.WriteLine("GROUNDED");
+                        _player.IsGrounded = true;
+
+                        //Y positie juist zetten zodat player niet in de grond zit
+                        _player.SetCorrectHeight(myCollisions.BottomCollisionHeight);
                     }
                     else
                     {
-                        enemy.IsGrounded = false;
+                        _player.IsGrounded = false;
                     }
 
-                    if (myCollisions.LeftCollisions.Count > 0)
-                    {
-                        enemy.CollisionLeft = true;
-                    }
-                    else
-                    {
-                        enemy.CollisionLeft = false;
-                    }
-
+                    //Collisions rechts controlleren
                     if (myCollisions.RightCollisions.Count > 0)
                     {
-                        enemy.CollisionRight = true;
+                        Console.WriteLine("RIGHT COLLISION");
+                        _player.CollisionRight = true;
                     }
                     else
                     {
-                        enemy.CollisionRight = false;
+                        _player.CollisionRight = false;
                     }
-                    //enemy playerprojectile collision
-                    collisionIndex = myCollisions.CheckEnemyPlayerProjectileHit(enemy);
+
+                    //Collisions left controleren
+                    if (myCollisions.LeftCollisions.Count > 0)
+                    {
+                        Console.WriteLine("LEFT COLLISION");
+                        _player.CollisionLeft = true;
+                    }
+                    else
+                    {
+                        _player.CollisionLeft = false;
+                    }
+
+                    //Collision top controleren
+                    //if (myCollisions.TopCollisions.Count > 0)
+                    //{
+                    //    Console.WriteLine("TOP COLLISION");
+                    //    _player.CollisionTop = true;
+                    //}
+                    //else
+                    //{
+                    //    _player.CollisionTop = false;
+                    //}
+                    #endregion
+
+                    #region player projectiles updaten & controleren
+                    myProjectiles.UpdatePlayerProjectiles(gameTime);
+
+                    //Controleren of er een collision is met de level tiles
+                    int collisionIndex = myCollisions.CheckProjectileCollisions();
                     if (collisionIndex != -1)
                     {
                         myProjectiles.RemovePlayerProjectile(collisionIndex);
-                        _enemyMinotaurList.Remove(enemy);
-                        break;
                     }
+                    #endregion
 
-                    //Player enemy collision
-                    if (myCollisions.CheckEnemyPlayerCollision(_player, enemy))
+                    #region Collisions enemies controleren
+                    if (_enemyMinotaurList != null)
                     {
-                        //_player.Reset();
-                        //campos = new Vector2(-150, 100);
-                        //LoadContent();
-                        _player.playerKilled = true;
+                        foreach (var enemy in _enemyMinotaurList)
+                        {
+                            myCollisions.CheckCollisions(enemy);
+                            if (myCollisions.BottomCollisions.Count > 0)
+                            {
+                                enemy.IsGrounded = true;
+                                enemy.setCorrectHeight(myCollisions.BottomCollisionHeight);
+                            }
+                            else
+                            {
+                                enemy.IsGrounded = false;
+                            }
+
+                            if (myCollisions.LeftCollisions.Count > 0)
+                            {
+                                enemy.CollisionLeft = true;
+                            }
+                            else
+                            {
+                                enemy.CollisionLeft = false;
+                            }
+
+                            if (myCollisions.RightCollisions.Count > 0)
+                            {
+                                enemy.CollisionRight = true;
+                            }
+                            else
+                            {
+                                enemy.CollisionRight = false;
+                            }
+                            //enemy playerprojectile collision
+                            collisionIndex = myCollisions.CheckEnemyPlayerProjectileHit(enemy);
+                            if (collisionIndex != -1)
+                            {
+                                myProjectiles.RemovePlayerProjectile(collisionIndex);
+                                _enemyMinotaurList.Remove(enemy);
+                                break;
+                            }
+
+                            //Player enemy collision
+                            if (myCollisions.CheckEnemyPlayerCollision(_player, enemy))
+                            {
+                                //_player.Reset();
+                                //campos = new Vector2(-150, 100);
+                                //LoadContent();
+                                _player.playerKilled = true;
+                            }
+                        }
                     }
-                }
-            }
-            #endregion
+                    #endregion
 
-            //Camera positie
-            if (_player.MovingRight)
-            {
-                campos += _player.VelocityX;
-            }
+                    //Camera positie
+                    if (_player.MovingRight)
+                    {
+                        campos += _player.VelocityX;
+                    }
 
-            if (_player.MovingLeft)
-            {
-                campos -= _player.VelocityX;
-            }
+                    if (_player.MovingLeft)
+                    {
+                        campos -= _player.VelocityX;
+                    }
 
-            //Checken of player dood is
-            if (_player.playerKilled)
-            {
-                LoadContent();
-                _player.playerKilled = false;
+                    //Checken of player dood is
+                    if (_player.playerKilled)
+                    {
+                        LoadContent();
+                        _player.playerKilled = false;
+                    }
+                    break;
+                #endregion
+
+                #region Level2
+                case GameState.Level2:
+                    break;
+                #endregion
             }
 
             base.Update(gameTime);
@@ -330,28 +409,58 @@ namespace Project_Gamedev
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-
-            var viewMatrix = camera.GetViewMatrix();
-            camera.Position = campos;
-
-            spriteBatch.Begin(transformMatrix: viewMatrix);
-
-            _level1.DrawLevel(spriteBatch);
-            _player.Draw(spriteBatch);
-
-            //Als er enemy minotaurs zijn ze tonen
-            if (_enemyMinotaurList != null)
+            
+            switch (CurrentGameState)
             {
-                foreach (var enemy in _enemyMinotaurList)
-                {
-                    enemy.Draw(spriteBatch);
-                }
+                #region Main menu
+                case GameState.MainMenu:
+                    spriteBatch.Begin();
+                    _mainStartButton.Draw(spriteBatch);
+                    _mainControlsButton.Draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
+                #endregion
+
+                #region Controls
+                case GameState.Controls:
+                    spriteBatch.Begin();
+                    _controlsLayout.Draw(spriteBatch);
+                    _controlsBackButton.Draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
+                #endregion
+
+                #region Level1
+                case GameState.Level1:
+                    var viewMatrix = camera.GetViewMatrix();
+                    camera.Position = campos;
+
+                    spriteBatch.Begin(transformMatrix: viewMatrix);
+
+                    _level1.DrawLevel(spriteBatch);
+                    _player.Draw(spriteBatch);
+
+                    //Als er enemy minotaurs zijn ze tonen
+                    if (_enemyMinotaurList != null)
+                    {
+                        foreach (var enemy in _enemyMinotaurList)
+                        {
+                            enemy.Draw(spriteBatch);
+                        }
+                    }
+
+                    myProjectiles.DrawPlayerProjectiles(spriteBatch);
+
+                    spriteBatch.End();
+                    break;
+                #endregion
+
+                #region Level2
+                case GameState.Level2:
+                    break;
+                #endregion                
             }
-
-            myProjectiles.DrawPlayerProjectiles(spriteBatch);
-
-            spriteBatch.End();
-
+            
             base.Draw(gameTime);
         }
     }

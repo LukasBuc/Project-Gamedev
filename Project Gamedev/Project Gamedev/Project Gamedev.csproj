@@ -43,11 +43,13 @@
   <ItemGroup>
     <Compile Include="Classes\Animation.cs" />
     <Compile Include="Classes\AnimationFrame.cs" />
+    <Compile Include="Classes\Button.cs" />
     <Compile Include="Classes\Camera2d.cs" />
     <Compile Include="Classes\Collisions.cs" />
     <Compile Include="Classes\Controls.cs" />
     <Compile Include="Classes\Enemy.cs" />
     <Compile Include="Classes\ICollide.cs" />
+    <Compile Include="Classes\Image.cs" />
     <Compile Include="Classes\Level.cs" />
     <Compile Include="Classes\PlayerProjectiles.cs" />
     <Compile Include="Classes\Projectile.cs" />
