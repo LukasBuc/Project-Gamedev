@@ -14,7 +14,7 @@ namespace Project_Gamedev.Classes
         public Vector2 Positie { get; set; }
         
         //Snelheid projectiel
-        private Vector2 _velocityX = new Vector2(5, 0);
+        private Vector2 _velocityX = new Vector2(8, 0);
 
         //Richting die wordt geschoten
         private readonly bool _shootLeft;

@@ -7,9 +7,17 @@
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Characters/Enemy/Minotaur sprite.png</File>
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Characters/Player/Player sprite.png</File>
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Projectiles/fireball.png</File>
-    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/Tile (1).png</File>
-    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/Tile (2).png</File>
-    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/Tile (3).png</File>
-    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/TileSmall (1).png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/GroundTileLeft.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/GroundTileMiddle.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/GroundTileRight.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/IslandTileLeft.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/IslandTileMiddle.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/IslandTileRight.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtTileLeft.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtTileMiddle.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtTileRight.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtTileWallLeft.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtTileWallMiddle.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtTileWallRight.png</File>
   </SourceFiles>
 </SourceFileCollection>

@@ -17,7 +17,18 @@ namespace Project_Gamedev
 
         //Textures
         Texture2D _playerTexture;
-        Texture2D _tileTexture;
+        Texture2D _groundTileLeft;
+        Texture2D _groundTileMiddle;
+        Texture2D _groundTileRight;
+        Texture2D _islandTileLeft;
+        Texture2D _islandTileMiddle;
+        Texture2D _islandTileRight;
+        Texture2D _dirtTileLeft;
+        Texture2D _dirtTileMiddle;
+        Texture2D _dirtTileRight;
+        Texture2D _dirtTileWallLeft;
+        Texture2D _dirtTileWallMiddle;
+        Texture2D _dirtTileWallRight;
         Texture2D _playerProjectileTexture;
         Texture2D _enemyMinotaurTexture;
 
@@ -60,16 +71,37 @@ namespace Project_Gamedev
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Textures inladen
-            _tileTexture = Content.Load<Texture2D>("Sprites\\Tiles\\TileSmall (1)");
+            _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
+            _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
+            _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
+            _islandTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileLeft");
+            _islandTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileMiddle");
+            _islandTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileRight");
+            _dirtTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileLeft");
+            _dirtTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileMiddle");
+            _dirtTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileRight");
+            _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
+            _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
+            _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
             _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
             _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
             _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
 
             //Level inladen
-            _level1 = new Level
-            {
-                Texture = _tileTexture
-            };
+            _level1 = new Level();
+
+            _level1.AddTextures(_groundTileLeft);       // 0
+            _level1.AddTextures(_groundTileMiddle);     // 1
+            _level1.AddTextures(_groundTileRight);      // 2
+            _level1.AddTextures(_islandTileLeft);       // 3
+            _level1.AddTextures(_islandTileMiddle);     // 4
+            _level1.AddTextures(_islandTileRight);      // 5
+            _level1.AddTextures(_dirtTileLeft);         // 6
+            _level1.AddTextures(_dirtTileMiddle);       // 7
+            _level1.AddTextures(_dirtTileRight);        // 8
+            _level1.AddTextures(_dirtTileWallLeft);     // 9
+            _level1.AddTextures(_dirtTileWallMiddle);   // 10
+            _level1.AddTextures(_dirtTileWallRight);    // 11
             _level1.CreateWorld();
 
             //Player projectile object aanmaken en texture geven
@@ -77,15 +109,17 @@ namespace Project_Gamedev
             myProjectiles.Texture = _playerProjectileTexture;
 
             //Player object aanmaken 
-            _player = new Player(_playerTexture, new Vector2(150, 100));
+            _player = new Player(_playerTexture, new Vector2(90, 280));
 
             //Enemy objects aanmaken
             _enemyMinotaurList = new List<Enemy>
             {
-                new Enemy(_enemyMinotaurTexture, new Vector2(100, 300)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(150, 300)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(200, 300)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(460, 100))
+                new Enemy(_enemyMinotaurTexture, new Vector2(100, 480)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(230, 480)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(580, 480)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(730, 480)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(850, 480)),
+                new Enemy(_enemyMinotaurTexture, new Vector2(950, 480))
             };
 
             //Collision object aanmaken
@@ -101,7 +135,7 @@ namespace Project_Gamedev
             }
 
             //Camera start positie
-            campos = new Vector2(-150, 100);
+            campos = new Vector2(-150, 90);
         }
 
         /// <summary>
@@ -192,15 +226,15 @@ namespace Project_Gamedev
             }
 
             //Collision top controleren
-            if (myCollisions.TopCollisions.Count > 0)
-            {
-                Console.WriteLine("TOP COLLISION");
-                _player.CollisionTop = true;
-            }
-            else
-            {
-                _player.CollisionTop = false;
-            }
+            //if (myCollisions.TopCollisions.Count > 0)
+            //{
+            //    Console.WriteLine("TOP COLLISION");
+            //    _player.CollisionTop = true;
+            //}
+            //else
+            //{
+            //    _player.CollisionTop = false;
+            //}
             #endregion
 
             #region player projectiles updaten & controleren
@@ -261,7 +295,8 @@ namespace Project_Gamedev
                     {
                         //_player.Reset();
                         //campos = new Vector2(-150, 100);
-                        LoadContent();
+                        //LoadContent();
+                        _player.playerKilled = true;
                     }
                 }
             }
@@ -276,6 +311,13 @@ namespace Project_Gamedev
             if (_player.MovingLeft)
             {
                 campos -= _player.VelocityX;
+            }
+
+            //Checken of player dood is
+            if (_player.playerKilled)
+            {
+                LoadContent();
+                _player.playerKilled = false;
             }
 
             base.Update(gameTime);

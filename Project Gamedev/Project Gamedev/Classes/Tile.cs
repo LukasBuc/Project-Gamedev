@@ -18,7 +18,15 @@ namespace Project_Gamedev.Classes
         {
             _texture = texture;
             Position = position;
-            CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 64, 64); //128
+            if (texture.Name.ToString().Contains("Island"))
+            {
+                CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 64, 32);
+            }
+            else
+            {
+                CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 64, 64);
+            }
+            
         }
 
         public void Draw(SpriteBatch spritebatch)

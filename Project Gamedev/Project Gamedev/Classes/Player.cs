@@ -59,6 +59,8 @@ namespace Project_Gamedev
         bool fired = false;
         bool jumped = false;
 
+        public bool playerKilled = false;
+
         public Player(Texture2D _texture, Vector2 _positie)
         {
             Texture = _texture;
@@ -236,6 +238,18 @@ namespace Project_Gamedev
                 _fallspeed = (float)0.5;
                 _totaalFallSpeed = VelocityY * _fallspeed;
 
+            }
+
+            //Wanneer player buiten de map valt
+            if (Positie.Y > 600)
+            {
+                playerKilled = true;
+            }
+
+            //Wanneer map uitgespeeld
+            if (Positie.X > 2500)
+            {
+                playerKilled = true;
             }
 
             //CollisionRectangle player updaten

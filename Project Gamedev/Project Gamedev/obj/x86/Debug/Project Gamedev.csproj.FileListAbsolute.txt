@@ -30,10 +30,6 @@ C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Wind
 C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\Tile (3).xnb
 C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\TileSmall (1).xnb
 C:\Users\Lukas\Desktop\Project Gamdedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Projectiles\fireball.xnb
-C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\Tile (1).xnb
-C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\Tile (2).xnb
-C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\Tile (3).xnb
-C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\TileSmall (1).xnb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Projectiles\fireball.xnb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Characters\Player\Player sprite.xnb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Project Gamedev.exe
@@ -70,3 +66,15 @@ C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windo
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D9.dll
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.MediaFoundation.xml
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\GroundTileLeft.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\GroundTileMiddle.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\GroundTileRight.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\IslandTileLeft.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\IslandTileMiddle.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\IslandTileRight.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\DirtTileLeft.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\DirtTileMiddle.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\DirtTileRight.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\DirtTileWallLeft.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\DirtTileWallMiddle.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\DirtTileWallRight.xnb

@@ -24,7 +24,7 @@ namespace Project_Gamedev.Classes
         public bool CollisionLeft { get; set; }
 
         public Vector2 VelocityY = new Vector2(0, 2);
-        public Vector2 VelocityX = new Vector2(2, 0);
+        public Vector2 VelocityX = new Vector2(3, 0);
 
         private float _fallspeed = (float)0.5;
         private Vector2 _totalFallSpeed;
