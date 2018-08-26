@@ -21,8 +21,6 @@ namespace Project_Gamedev.Classes
         public bool mouseReleased;
         public bool mouseHover;
 
-        Color buttonKleur = new Color(255, 255, 255, 255);
-
         public Button(Texture2D _texture, Texture2D _textureHover, Vector2 _positie)
         {
             Texture = _texture;

@@ -22,7 +22,7 @@ namespace Project_Gamedev
             Level1,
             Level2
         }
-        GameState CurrentGameState = GameState.MainMenu;
+        GameState CurrentGameState = GameState.Level2;
 
         //Main menu
         Button _mainStartButton;
@@ -52,6 +52,7 @@ namespace Project_Gamedev
         //Objecten
         Player _player;
         Level _level1;
+        Level _level2;
         Collisions myCollisions;
         PlayerProjectiles myProjectiles;
         Camera2d camera;
@@ -60,6 +61,8 @@ namespace Project_Gamedev
         Vector2 campos;
 
         MouseState mouse;
+
+        byte[,] Level1Array, Level2Array;
 
         public Game1()
         {
@@ -78,7 +81,7 @@ namespace Project_Gamedev
             // TODO: Add your initialization logic here
             base.Initialize();
             IsMouseVisible = true;
-            
+
             camera = new Camera2d(GraphicsDevice.Viewport);
         }
 
@@ -91,84 +94,200 @@ namespace Project_Gamedev
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            _mainStartButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonPlay"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonPlayHover"), new Vector2(200, 100));
-            _mainControlsButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonControls"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonControlsHover"), new Vector2(200, 300));
-            _controlsBackButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonBack"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonBackHover"), new Vector2(200, 300));
-
-            _controlsLayout = new Image(Content.Load<Texture2D>("Sprites\\Extra\\ControlsLayout"), new Vector2(150, 50));
-
-            _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
-            _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
-            _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
-
-            #region Tile textures inladen
-            _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
-            _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
-            _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
-            _islandTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileLeft");
-            _islandTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileMiddle");
-            _islandTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileRight");
-            _dirtTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileLeft");
-            _dirtTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileMiddle");
-            _dirtTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileRight");
-            _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
-            _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
-            _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
-           
-            #endregion
-
-            //Level inladen
-            #region Level inladen
-            _level1 = new Level();
-
-            _level1.AddTextures(_groundTileLeft);       // 0
-            _level1.AddTextures(_groundTileMiddle);     // 1
-            _level1.AddTextures(_groundTileRight);      // 2
-            _level1.AddTextures(_islandTileLeft);       // 3
-            _level1.AddTextures(_islandTileMiddle);     // 4
-            _level1.AddTextures(_islandTileRight);      // 5
-            _level1.AddTextures(_dirtTileLeft);         // 6
-            _level1.AddTextures(_dirtTileMiddle);       // 7
-            _level1.AddTextures(_dirtTileRight);        // 8
-            _level1.AddTextures(_dirtTileWallLeft);     // 9
-            _level1.AddTextures(_dirtTileWallMiddle);   // 10
-            _level1.AddTextures(_dirtTileWallRight);    // 11
-            _level1.CreateWorld();
-            #endregion
-
-
-            //Player projectile object aanmaken en texture geven
-            myProjectiles = new PlayerProjectiles();
-            myProjectiles.Texture = _playerProjectileTexture;
-
-            //Player object aanmaken 
-            _player = new Player(_playerTexture, new Vector2(90, 280));
-
-            //Enemy objects aanmaken
-            _enemyMinotaurList = new List<Enemy>
+            switch (CurrentGameState)
             {
-                new Enemy(_enemyMinotaurTexture, new Vector2(100, 480)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(230, 480)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(580, 480)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(730, 480)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(850, 480)),
-                new Enemy(_enemyMinotaurTexture, new Vector2(950, 480))
-            };
+                case GameState.MainMenu:
+                    _mainStartButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonPlay"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonPlayHover"), new Vector2(200, 100));
+                    _mainControlsButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonControls"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonControlsHover"), new Vector2(200, 300));
+                    break;
+                case GameState.Controls:
+                    _controlsBackButton = new Button(Content.Load<Texture2D>("Sprites\\Buttons\\ButtonBack"), Content.Load<Texture2D>("Sprites\\Buttons\\ButtonBackHover"), new Vector2(200, 300));
+                    _controlsLayout = new Image(Content.Load<Texture2D>("Sprites\\Extra\\ControlsLayout"), new Vector2(150, 50));
+                    break;
+                case GameState.Level1:
+                    _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
+                    _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
+                    _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
 
-            //Collision object aanmaken
-            myCollisions = new Collisions();
+                    #region Tile textures inladen
+                    _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
+                    _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
+                    _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
+                    _islandTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileLeft");
+                    _islandTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileMiddle");
+                    _islandTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileRight");
+                    _dirtTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileLeft");
+                    _dirtTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileMiddle");
+                    _dirtTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileRight");
+                    _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
+                    _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
+                    _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
 
-            //Ophalen welke tiles worden gebruikt en in lijst zetten
-            foreach (var item in _level1.TileArray)
-            {
-                if (item != null)
-                {
-                    myCollisions.AddCollisionsObject(item);
-                }
+                    #endregion
+
+                    #region Level1 inladen
+                    Level1Array = new byte[,]
+                    {
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0 }, //Max hoogte scherm
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,11 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,4,5,6,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,8,8,8 },
+                        {1,0,0,4,6,0,0,0,0,4,6,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0 },
+                        {1,6,0,0,0,0,0,4,6,0,0,0,0,0,4,6,0,0,0,0,4,5,5,5,6,0,0,0,0,0,4,6,0,0,0,0,1,2,2,2 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,10,11,11,11 },
+                        {1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,10,0,0,0 },
+                        {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0 },
+                    };
+
+                    _level1 = new Level(Level1Array);
+
+                    _level1.AddTextures(_groundTileLeft);       // 0
+                    _level1.AddTextures(_groundTileMiddle);     // 1
+                    _level1.AddTextures(_groundTileRight);      // 2
+                    _level1.AddTextures(_islandTileLeft);       // 3
+                    _level1.AddTextures(_islandTileMiddle);     // 4
+                    _level1.AddTextures(_islandTileRight);      // 5
+                    _level1.AddTextures(_dirtTileLeft);         // 6
+                    _level1.AddTextures(_dirtTileMiddle);       // 7
+                    _level1.AddTextures(_dirtTileRight);        // 8
+                    _level1.AddTextures(_dirtTileWallLeft);     // 9
+                    _level1.AddTextures(_dirtTileWallMiddle);   // 10
+                    _level1.AddTextures(_dirtTileWallRight);    // 11
+                    _level1.CreateWorld();
+
+                    //Player projectile object aanmaken en texture geven
+                    myProjectiles = new PlayerProjectiles();
+                    myProjectiles.Texture = _playerProjectileTexture;
+
+                    //Player object aanmaken 
+                    _player = new Player(_playerTexture, new Vector2(90, 280));
+
+                    //Enemy objects aanmaken
+                    _enemyMinotaurList = new List<Enemy>
+                    {
+                        new Enemy(_enemyMinotaurTexture, new Vector2(100, 480)),
+                        new Enemy(_enemyMinotaurTexture, new Vector2(230, 480)),
+                        new Enemy(_enemyMinotaurTexture, new Vector2(580, 480)),
+                        new Enemy(_enemyMinotaurTexture, new Vector2(730, 480)),
+                        new Enemy(_enemyMinotaurTexture, new Vector2(850, 480)),
+                        new Enemy(_enemyMinotaurTexture, new Vector2(950, 480))
+                    };
+
+                    //Collision object aanmaken
+                    myCollisions = new Collisions();
+
+                    //Ophalen welke tiles worden gebruikt en in lijst zetten
+                    foreach (var item in _level1.TileArray)
+                    {
+                        if (item != null)
+                        {
+                            myCollisions.AddCollisionsObject(item);
+                        }
+                    }
+
+                    //Camera start positie
+                    campos = new Vector2(-150, 90);
+                    #endregion
+                    break;
+                case GameState.Level2:
+                    _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
+                    _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
+                    _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
+
+                    #region Tile textures inladen
+                    _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
+                    _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
+                    _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
+                    _islandTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileLeft");
+                    _islandTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileMiddle");
+                    _islandTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileRight");
+                    _dirtTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileLeft");
+                    _dirtTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileMiddle");
+                    _dirtTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileRight");
+                    _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
+                    _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
+                    _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
+
+                    #endregion
+
+                    Level2Array = new byte[,]
+                    {
+                        { 9,0,0,0,0,0,0,0,0,0,7 },
+                        { 9,0,0,0,0,0,0,0,0,0,7 },
+                        { 9,0,0,0,0,0,0,0,0,0,7 },
+                        { 9,0,0,6,0,0,0,0,4,0,7 },
+                        { 9,0,0,0,6,0,0,4,0,0,7 },
+                        { 9,0,0,0,0,2,2,0,0,0,7 },
+                        { 9,0,0,0,1,0,0,1,0,0,7 },
+                        { 9,0,0,1,0,0,0,0,0,4,7 },
+                        { 9,0,4,0,0,0,0,0,6,0,7 },
+                        { 9,1,0,0,0,1,0,0,0,1,7 },
+                        { 9,1,1,1,1,1,6,0,4,0,7 },
+                        { 9,0,0,0,0,0,0,1,0,0,7 },
+                        { 9,0,0,0,0,4,6,0,0,0,7 },
+                        { 9,0,0,0,4,6,0,0,0,0,7 },
+                        { 9,0,4,1,1,0,0,0,0,0,7 },
+                        { 9,1,0,0,0,0,1,6,0,0,7 },
+                        { 9,1,1,1,1,1,1,0,0,1,7 },
+                        { 1,1,1,1,1,1,0,0,1,1,1 },
+                        { 1,1,1,1,1,1,6,0,0,0,1 },
+                        { 1,0,0,0,0,0,0,1,0,0,1 }, //12 voor links, 10 voor rechts
+                        { 1,2,2,2,2,2,2,2,2,2,3 }
+                    };
+
+                    _level2 = new Level(Level2Array);
+
+                    _level2.AddTextures(_groundTileLeft);       // 0
+                    _level2.AddTextures(_groundTileMiddle);     // 1
+                    _level2.AddTextures(_groundTileRight);      // 2
+                    _level2.AddTextures(_islandTileLeft);       // 3
+                    _level2.AddTextures(_islandTileMiddle);     // 4
+                    _level2.AddTextures(_islandTileRight);      // 5
+                    _level2.AddTextures(_dirtTileLeft);         // 6
+                    _level2.AddTextures(_dirtTileMiddle);       // 7
+                    _level2.AddTextures(_dirtTileRight);        // 8
+                    _level2.AddTextures(_dirtTileWallLeft);     // 9
+                    _level2.AddTextures(_dirtTileWallMiddle);   // 10
+                    _level2.AddTextures(_dirtTileWallRight);    // 11
+                    _level2.CreateWorld();
+
+                    //Player projectile object aanmaken en texture geven
+                    myProjectiles = new PlayerProjectiles();
+                    myProjectiles.Texture = _playerProjectileTexture;
+
+                    //Player object aanmaken 
+                    _player = new Player(_playerTexture, new Vector2(90, 1250));
+
+                    //Enemy objects aanmaken
+                    _enemyMinotaurList = new List<Enemy>
+                    {
+                        //new Enemy(_enemyMinotaurTexture, new Vector2(100, 480)),
+                        //new Enemy(_enemyMinotaurTexture, new Vector2(230, 480)),
+                        //new Enemy(_enemyMinotaurTexture, new Vector2(580, 480)),
+                        //new Enemy(_enemyMinotaurTexture, new Vector2(730, 480)),
+                        //new Enemy(_enemyMinotaurTexture, new Vector2(850, 480)),
+                        new Enemy(_enemyMinotaurTexture, new Vector2(950, 480))
+                    };
+
+                    //Collision object aanmaken
+                    myCollisions = new Collisions();
+
+                    //Ophalen welke tiles worden gebruikt en in lijst zetten
+                    foreach (var item in _level2.TileArray)
+                    {
+                        if (item != null)
+                        {
+                            myCollisions.AddCollisionsObject(item);
+                        }
+                    }
+
+                    //Camera start positie
+                    campos = new Vector2(-50, 1050);
+                    break;
+                default:
+                    break;
             }
 
-            //Camera start positie
-            campos = new Vector2(-150, 90);
         }
 
         /// <summary>
@@ -201,12 +320,14 @@ namespace Project_Gamedev
                         CurrentGameState = GameState.Level1;
                         IsMouseVisible = false;
                         _mainStartButton.buttonClicked = false;
+                        LoadContent();
                     }
 
                     if (_mainControlsButton.buttonClicked)
                     {
                         CurrentGameState = GameState.Controls;
                         _mainControlsButton.buttonClicked = false;
+                        LoadContent();
                     }
                     _mainStartButton.Update(mouse);
                     _mainControlsButton.Update(mouse);
@@ -221,13 +342,14 @@ namespace Project_Gamedev
                     {
                         CurrentGameState = GameState.MainMenu;
                         _controlsBackButton.buttonClicked = false;
+                        LoadContent();
                     }
                     _controlsBackButton.Update(mouse);
                     break;
                 #endregion
 
-                #region Level1
                 case GameState.Level1:
+                case GameState.Level2:
                     #region Update characters
                     _player.Update(gameTime);
 
@@ -297,15 +419,15 @@ namespace Project_Gamedev
                     }
 
                     //Collision top controleren
-                    //if (myCollisions.TopCollisions.Count > 0)
-                    //{
-                    //    Console.WriteLine("TOP COLLISION");
-                    //    _player.CollisionTop = true;
-                    //}
-                    //else
-                    //{
-                    //    _player.CollisionTop = false;
-                    //}
+                    if (myCollisions.TopCollisions.Count > 0)
+                    {
+                        Console.WriteLine("TOP COLLISION");
+                        _player.CollisionTop = true;
+                    }
+                    else
+                    {
+                        _player.CollisionTop = false;
+                    }
                     #endregion
 
                     #region player projectiles updaten & controleren
@@ -373,30 +495,42 @@ namespace Project_Gamedev
                     }
                     #endregion
 
-                    //Camera positie
-                    if (_player.MovingRight)
-                    {
-                        campos += _player.VelocityX;
-                    }
-
-                    if (_player.MovingLeft)
-                    {
-                        campos -= _player.VelocityX;
-                    }
-
                     //Checken of player dood is
                     if (_player.playerKilled)
                     {
                         LoadContent();
                         _player.playerKilled = false;
                     }
-                    break;
-                #endregion
 
-                #region Level2
-                case GameState.Level2:
+                    if (_player.level1Cleared)
+                    {
+                        CurrentGameState = GameState.Level2;
+                        LoadContent();
+                    }
+
+                    if (_player.level2Cleared)
+                    {
+                        Exit();
+                    }
                     break;
-                #endregion
+            }
+
+            if (CurrentGameState == GameState.Level1)
+            {
+                //Camera positie
+                if (_player.MovingRight)
+                {
+                    campos += _player.VelocityX;
+                }
+
+                if (_player.MovingLeft)
+                {
+                    campos -= _player.VelocityX;
+                }
+            }
+            else if (CurrentGameState == GameState.Level2)
+            {
+                campos -= new Vector2(0, 1);
             }
 
             base.Update(gameTime);
@@ -409,7 +543,7 @@ namespace Project_Gamedev
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
-            
+            var viewMatrix = camera.GetViewMatrix();
             switch (CurrentGameState)
             {
                 #region Main menu
@@ -432,7 +566,7 @@ namespace Project_Gamedev
 
                 #region Level1
                 case GameState.Level1:
-                    var viewMatrix = camera.GetViewMatrix();
+                    
                     camera.Position = campos;
 
                     spriteBatch.Begin(transformMatrix: viewMatrix);
@@ -457,10 +591,30 @@ namespace Project_Gamedev
 
                 #region Level2
                 case GameState.Level2:
+                    //var viewMatrix = camera.GetViewMatrix();
+                    camera.Position = campos;
+
+                    spriteBatch.Begin(transformMatrix: viewMatrix);
+
+                    _level2.DrawLevel(spriteBatch);
+                    _player.Draw(spriteBatch);
+
+                    //Als er enemy minotaurs zijn ze tonen
+                    if (_enemyMinotaurList != null)
+                    {
+                        foreach (var enemy in _enemyMinotaurList)
+                        {
+                            enemy.Draw(spriteBatch);
+                        }
+                    }
+
+                    myProjectiles.DrawPlayerProjectiles(spriteBatch);
+
+                    spriteBatch.End();
                     break;
-                #endregion                
+                    #endregion
             }
-            
+
             base.Draw(gameTime);
         }
     }

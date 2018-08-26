@@ -60,6 +60,9 @@ namespace Project_Gamedev
 
         public bool playerKilled = false;
 
+        public bool level1Cleared = false;
+        public bool level2Cleared = false;
+
         public Player(Texture2D _texture, Vector2 _positie)
         {
             Texture = _texture;
@@ -242,13 +245,20 @@ namespace Project_Gamedev
             //Wanneer player buiten de map valt
             if (Positie.Y > 600)
             {
-                playerKilled = true;
+                //playerKilled = true;
             }
 
-            //Wanneer map uitgespeeld
+            //Wanneer level1 uitgespeeld
             if (Positie.X > 2500)
             {
-                playerKilled = true;
+                //playerKilled = true;
+                level1Cleared = true;
+            }
+
+            //Wanneer level2 uitgespeeld
+            if (Positie.Y < 100)
+            {
+                level2Cleared = true;
             }
 
             //CollisionRectangle player updaten
