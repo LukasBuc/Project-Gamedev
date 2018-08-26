@@ -62,6 +62,7 @@ namespace Project_Gamedev
 
         public bool level1Cleared = false;
         public bool level2Cleared = false;
+        private int CurrentLevel;
 
         public Vector2 CameraPositie { get; set; }
 
@@ -111,10 +112,11 @@ namespace Project_Gamedev
             _animationIdleLeft.AantalBewegingenPerSeconde = 3;
         }
         
-        public void Update(GameTime gameTime, Vector2 _cameraPositie)
+        public void Update(GameTime gameTime, Vector2 _cameraPositie, int _currentLevel)
         {
             PlayerControls.Update();
             CameraPositie = _cameraPositie;
+            CurrentLevel = _currentLevel;
             
             //Schieten
             if (PlayerControls.Fire && !fired)
@@ -259,7 +261,7 @@ namespace Project_Gamedev
             }
 
             //Wanneer level2 uitgespeeld
-            if (Positie.Y < 100)
+            if (Positie.Y < 100 && CurrentLevel == 2)
             {
                 level2Cleared = true;
             }

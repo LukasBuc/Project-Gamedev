@@ -23,7 +23,7 @@ namespace Project_Gamedev
             Level2,
             EndScreen
         }
-        GameState CurrentGameState = GameState.MainMenu;
+        GameState CurrentGameState = GameState.EndScreen;
 
         //Main menu
         Button _mainStartButton;
@@ -49,6 +49,7 @@ namespace Project_Gamedev
 
         //Images
         Image _controlsLayout;
+        Image _victoryAchieved;
 
         //Objecten
         Player _player;
@@ -63,7 +64,9 @@ namespace Project_Gamedev
 
         MouseState mouse;
 
+
         byte[,] Level1Array, Level2Array;
+        int currentLevel;
 
         public Game1()
         {
@@ -287,7 +290,8 @@ namespace Project_Gamedev
                     //Camera start positie
                     campos = new Vector2(-50, 1050);
                     break;
-                default:
+                case GameState.EndScreen:
+                    _victoryAchieved = new Image(Content.Load<Texture2D>("Sprites\\Extra\\VictoryAchieved"), new Vector2(-80, 150));
                     break;
             }
         }
@@ -353,7 +357,7 @@ namespace Project_Gamedev
                 case GameState.Level1:
                 case GameState.Level2:
                     #region Update characters
-                    _player.Update(gameTime, campos);
+                    _player.Update(gameTime, campos, currentLevel);
 
                     if (_enemyMinotaurList != null)
                     {
@@ -512,13 +516,15 @@ namespace Project_Gamedev
 
                     if (_player.level2Cleared)
                     {
-                        Exit();
+                        CurrentGameState = GameState.EndScreen;
+                        LoadContent();
                     }
                     break;
             }
 
             if (CurrentGameState == GameState.Level1)
             {
+                currentLevel = 1;
                 //Camera positie
                 if (_player.MovingRight)
                 {
@@ -532,6 +538,7 @@ namespace Project_Gamedev
             }
             else if (CurrentGameState == GameState.Level2)
             {
+                currentLevel = 2;
                 //Camera automatisch laten stijgen
                 campos -= new Vector2(0, 1);
             }
@@ -615,7 +622,13 @@ namespace Project_Gamedev
 
                     spriteBatch.End();
                     break;
-                    #endregion
+                #endregion
+                case GameState.EndScreen:
+                    GraphicsDevice.Clear(Color.Black);
+                    spriteBatch.Begin();
+                    _victoryAchieved.Draw(spriteBatch);
+                    spriteBatch.End();
+                    break;
             }
 
             base.Draw(gameTime);
