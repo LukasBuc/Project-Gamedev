@@ -20,9 +20,10 @@ namespace Project_Gamedev
             MainMenu,
             Controls,
             Level1,
-            Level2
+            Level2,
+            EndScreen
         }
-        GameState CurrentGameState = GameState.Level2;
+        GameState CurrentGameState = GameState.MainMenu;
 
         //Main menu
         Button _mainStartButton;
@@ -184,10 +185,10 @@ namespace Project_Gamedev
                             myCollisions.AddCollisionsObject(item);
                         }
                     }
+                    #endregion
 
                     //Camera start positie
                     campos = new Vector2(-150, 90);
-                    #endregion
                     break;
                 case GameState.Level2:
                     _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
@@ -210,6 +211,7 @@ namespace Project_Gamedev
 
                     #endregion
 
+                    #region Level2 inladen
                     Level2Array = new byte[,]
                     {
                         { 9,0,0,0,0,0,0,0,0,0,7 },
@@ -280,6 +282,7 @@ namespace Project_Gamedev
                             myCollisions.AddCollisionsObject(item);
                         }
                     }
+                    #endregion
 
                     //Camera start positie
                     campos = new Vector2(-50, 1050);
@@ -287,7 +290,6 @@ namespace Project_Gamedev
                 default:
                     break;
             }
-
         }
 
         /// <summary>
@@ -351,7 +353,7 @@ namespace Project_Gamedev
                 case GameState.Level1:
                 case GameState.Level2:
                     #region Update characters
-                    _player.Update(gameTime);
+                    _player.Update(gameTime, campos);
 
                     if (_enemyMinotaurList != null)
                     {
@@ -530,6 +532,7 @@ namespace Project_Gamedev
             }
             else if (CurrentGameState == GameState.Level2)
             {
+                //Camera automatisch laten stijgen
                 campos -= new Vector2(0, 1);
             }
 

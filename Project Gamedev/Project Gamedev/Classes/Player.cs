@@ -63,6 +63,8 @@ namespace Project_Gamedev
         public bool level1Cleared = false;
         public bool level2Cleared = false;
 
+        public Vector2 CameraPositie { get; set; }
+
         public Player(Texture2D _texture, Vector2 _positie)
         {
             Texture = _texture;
@@ -109,9 +111,10 @@ namespace Project_Gamedev
             _animationIdleLeft.AantalBewegingenPerSeconde = 3;
         }
         
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, Vector2 _cameraPositie)
         {
             PlayerControls.Update();
+            CameraPositie = _cameraPositie;
             
             //Schieten
             if (PlayerControls.Fire && !fired)
@@ -242,10 +245,10 @@ namespace Project_Gamedev
 
             }
 
-            //Wanneer player buiten de map valt
-            if (Positie.Y > 600)
+            //Wanneer player buiten de map/scherm valt
+            if (Positie.Y > CameraPositie.Y + 525)
             {
-                //playerKilled = true;
+                playerKilled = true;
             }
 
             //Wanneer level1 uitgespeeld
