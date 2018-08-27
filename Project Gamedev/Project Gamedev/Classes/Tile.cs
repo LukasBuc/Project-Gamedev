@@ -25,8 +25,7 @@ namespace Project_Gamedev.Classes
             else
             {
                 CollisionRectangle = new Rectangle((int)Position.X, (int)Position.Y, 64, 64);
-            }
-            
+            }            
         }
 
         public void Draw(SpriteBatch spritebatch)

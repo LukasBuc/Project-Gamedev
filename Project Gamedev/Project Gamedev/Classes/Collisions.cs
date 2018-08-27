@@ -9,7 +9,6 @@ namespace Project_Gamedev.Classes
 {
     public class Collisions
     {
-        //List<ICollide> mogelijkeCollisionObjecten;
         List<ICollide> mogelijkeCollisionObjecten;
         List<ICollide> projectileCollisionObjecten;
         public List<ICollide> BottomCollisions { get; set; }

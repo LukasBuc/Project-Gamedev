@@ -105,7 +105,6 @@ namespace Project_Gamedev
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scoreFont = Content.Load<SpriteFont>("Sprites\\Fonts\\ScoreFont");
             endScreenFont = Content.Load<SpriteFont>("Sprites\\Fonts\\EndScreenFont");
@@ -147,8 +146,7 @@ namespace Project_Gamedev
                     {
                         Texture = _playerProjectileTexture
                     };
-
-                    //Player object aanmaken 
+                    
                     _player = new Player(_playerTexture, new Vector2(90, 280));
 
                     //Enemy objects aanmaken
@@ -162,7 +160,6 @@ namespace Project_Gamedev
                         new Enemy(_enemyMinotaurTexture, new Vector2(950, 480))
                     };
 
-                    //Collision object aanmaken
                     myCollisions = new Collisions();
 
                     //Ophalen welke tiles worden gebruikt en in lijst zetten
@@ -213,8 +210,10 @@ namespace Project_Gamedev
                     _level2.CreateWorld();
 
                     //Player projectile object aanmaken en texture geven
-                    myProjectiles = new PlayerProjectiles();
-                    myProjectiles.Texture = _playerProjectileTexture;
+                    myProjectiles = new PlayerProjectiles
+                    {
+                        Texture = _playerProjectileTexture
+                    };
 
                     //Player object aanmaken 
                     _player = new Player(_playerTexture, new Vector2(90, 1250));
@@ -343,7 +342,6 @@ namespace Project_Gamedev
                     //Collisions bottom controleren
                     if (myCollisions.BottomCollisions.Count > 0)
                     {
-                        Console.WriteLine("GROUNDED");
                         _player.IsGrounded = true;
 
                         //Y positie juist zetten zodat player niet in de grond zit
@@ -357,7 +355,6 @@ namespace Project_Gamedev
                     //Collisions right controlleren
                     if (myCollisions.RightCollisions.Count > 0)
                     {
-                        Console.WriteLine("RIGHT COLLISION");
                         _player.CollisionRight = true;
                     }
                     else
@@ -368,7 +365,6 @@ namespace Project_Gamedev
                     //Collisions left controleren
                     if (myCollisions.LeftCollisions.Count > 0)
                     {
-                        Console.WriteLine("LEFT COLLISION");
                         _player.CollisionLeft = true;
                     }
                     else
@@ -379,7 +375,6 @@ namespace Project_Gamedev
                     //Collision top controleren
                     if (myCollisions.TopCollisions.Count > 0)
                     {
-                        Console.WriteLine("TOP COLLISION");
                         _player.CollisionTop = true;
                     }
                     else
@@ -432,6 +427,7 @@ namespace Project_Gamedev
                             {
                                 enemy.CollisionRight = false;
                             }
+
                             //enemy playerprojectile collision
                             collisionIndex = myCollisions.CheckEnemyPlayerProjectileHit(enemy);
                             if (collisionIndex != -1)

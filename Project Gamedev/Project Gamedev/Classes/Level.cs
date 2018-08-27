@@ -35,9 +35,9 @@ namespace Project_Gamedev.Classes
 
         public void CreateWorld()
         {
-            for (int x = 0; x < levelHeight; x++) //9
+            for (int x = 0; x < levelHeight; x++)
             {
-                for (int y = 0; y < levelWidth; y++) //40
+                for (int y = 0; y < levelWidth; y++)
                 {
                     switch (LevelArray[x,y])
                     {
@@ -99,9 +99,9 @@ namespace Project_Gamedev.Classes
 
         public void DrawLevel(SpriteBatch spritebatch)
         {
-            for (int x = 0; x < levelHeight; x++) //9
+            for (int x = 0; x < levelHeight; x++)
             {
-                for (int y = 0; y < levelWidth; y++) //40
+                for (int y = 0; y < levelWidth; y++)
                 {
                     if (TileArray[x, y] != null)
                     {

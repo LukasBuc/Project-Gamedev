@@ -135,6 +135,30 @@ namespace Project_Gamedev
                 fired = false;
             }
 
+            //Bewegen rechts
+            if (PlayerControls.Right)
+            {
+                if (!CollisionRight)
+                {
+                    Positie += VelocityX;
+                    MovingRight = true;
+
+                    //Animation naar rechts wandelen
+                    _animationWalkRight.Update(gameTime);
+
+                    //Walked left op false zetten zodat de idle animatie naar de juiste kant staat
+                    PlayerWalkedLeft = false;
+                }
+                else
+                {
+                    MovingRight = false;
+                }
+            }
+            else
+            {
+                MovingRight = false;
+            }
+
             //Bewegen links
             if (PlayerControls.Left)
             {
@@ -157,30 +181,6 @@ namespace Project_Gamedev
             else
             {
                 MovingLeft = false;
-            }
-
-            //Bewegen rechts
-            if (PlayerControls.Right)
-            {
-                if (!CollisionRight)
-                {
-                    Positie += VelocityX;
-                    MovingRight = true;
-                    
-                    //Animation naar rechts wandelen
-                    _animationWalkRight.Update(gameTime);
-
-                    //Walked left op false zetten zodat de idle animatie naar de juiste kant staat
-                    PlayerWalkedLeft = false;
-                }
-                else
-                {
-                    MovingRight = false;
-                }
-            }
-            else
-            {
-                MovingRight = false;
             }
 
             //Idle links/rechts
@@ -244,7 +244,6 @@ namespace Project_Gamedev
                 //Val snelheid resetten
                 _fallspeed = (float)0.5;
                 _totaalFallSpeed = VelocityY * _fallspeed;
-
             }
 
             //Wanneer player buiten de map/scherm valt
@@ -256,7 +255,6 @@ namespace Project_Gamedev
             //Wanneer level1 uitgespeeld
             if (Positie.X > 2500)
             {
-                //playerKilled = true;
                 level1Cleared = true;
             }
 

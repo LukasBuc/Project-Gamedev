@@ -12,7 +12,6 @@ namespace Project_Gamedev.Classes
     {
         public Texture2D Texture;
         public List<Projectile> PlayerProjectileList = new List<Projectile>();
-
         private List<Projectile> _projectilesToRemove;
 
         public PlayerProjectiles()
@@ -62,7 +61,6 @@ namespace Project_Gamedev.Classes
             {
                 PlayerProjectileList.RemoveAt(collideObject);
             }
-            
         }
     }
 }
