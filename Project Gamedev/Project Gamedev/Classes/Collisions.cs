@@ -22,7 +22,6 @@ namespace Project_Gamedev.Classes
         public Collisions()
         {
             mogelijkeCollisionObjecten = new List<ICollide>();
-
             projectileCollisionObjecten = new List<ICollide>();
         }
 
@@ -31,8 +30,6 @@ namespace Project_Gamedev.Classes
             mogelijkeCollisionObjecten.Add(collisionRectangle);
         }
 
-
-        //TODO margin variabele toevoegen en cijfers proberen weghalen uit code
         public void CheckCollisions(ICollide myCollisionRectangle)
         {
             BottomCollisions = new List<ICollide>();
@@ -53,10 +50,10 @@ namespace Project_Gamedev.Classes
                 }
 
                 //Check right
-                if (myCollisionRectangle.GetCollisionRectangle().Right >= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Left - 2 &&
-                    myCollisionRectangle.GetCollisionRectangle().Right <= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Left + 2 &&
-                    myCollisionRectangle.GetCollisionRectangle().Bottom >= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Top + 8 &&
-                    myCollisionRectangle.GetCollisionRectangle().Top <= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Bottom - 8)
+                if (myCollisionRectangle.GetCollisionRectangle().Right >= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Left - 2 &&     
+                    myCollisionRectangle.GetCollisionRectangle().Right <= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Left + 2 &&     
+                    myCollisionRectangle.GetCollisionRectangle().Bottom >= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Top + 8 &&     
+                    myCollisionRectangle.GetCollisionRectangle().Top <= mogelijkeCollisionObjecten[i].GetCollisionRectangle().Bottom - 8)      
                 {
                     RightCollisions.Add(mogelijkeCollisionObjecten[i]);
                 }

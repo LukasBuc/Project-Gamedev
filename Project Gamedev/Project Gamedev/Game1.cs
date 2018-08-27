@@ -121,29 +121,8 @@ namespace Project_Gamedev
                     _controlsLayout = new Image(Content.Load<Texture2D>("Sprites\\Extra\\ControlsLayout"), new Vector2(150, 50));
                     break;
                 case GameState.Level1:
-                    _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
-                    _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
-                    _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
 
-                    #region Tile textures inladen
-                    _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
-                    _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
-                    _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
-                    _islandTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileLeft");
-                    _islandTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileMiddle");
-                    _islandTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileRight");
-                    _dirtTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileLeft");
-                    _dirtTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileMiddle");
-                    _dirtTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileRight");
-                    _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
-                    _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
-                    _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
-                    _DirtToGrassLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassLeft");
-                    _DirtToGrassRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassRight");
-                    _GrassTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileLeft");
-                    _GrassTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileRight");
-
-                    #endregion
+                    LoadTextures();
 
                     #region Level1 inladen
                     Level1Array = new byte[,]
@@ -160,24 +139,14 @@ namespace Project_Gamedev
                     };
 
                     _level1 = new Level(Level1Array);
-
-                    _level1.AddTextures(_groundTileLeft);       // 0
-                    _level1.AddTextures(_groundTileMiddle);     // 1
-                    _level1.AddTextures(_groundTileRight);      // 2
-                    _level1.AddTextures(_islandTileLeft);       // 3
-                    _level1.AddTextures(_islandTileMiddle);     // 4
-                    _level1.AddTextures(_islandTileRight);      // 5
-                    _level1.AddTextures(_dirtTileLeft);         // 6
-                    _level1.AddTextures(_dirtTileMiddle);       // 7
-                    _level1.AddTextures(_dirtTileRight);        // 8
-                    _level1.AddTextures(_dirtTileWallLeft);     // 9
-                    _level1.AddTextures(_dirtTileWallMiddle);   // 10
-                    _level1.AddTextures(_dirtTileWallRight);    // 11
+                    AddTexturesToLevel(_level1);
                     _level1.CreateWorld();
 
                     //Player projectile object aanmaken en texture geven
-                    myProjectiles = new PlayerProjectiles();
-                    myProjectiles.Texture = _playerProjectileTexture;
+                    myProjectiles = new PlayerProjectiles
+                    {
+                        Texture = _playerProjectileTexture
+                    };
 
                     //Player object aanmaken 
                     _player = new Player(_playerTexture, new Vector2(90, 280));
@@ -210,29 +179,7 @@ namespace Project_Gamedev
                     campos = new Vector2(-150, 90);
                     break;
                 case GameState.Level2:
-                    _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
-                    _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
-                    _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
-
-                    #region Tile textures inladen
-                    _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
-                    _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
-                    _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
-                    _islandTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileLeft");
-                    _islandTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileMiddle");
-                    _islandTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileRight");
-                    _dirtTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileLeft");
-                    _dirtTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileMiddle");
-                    _dirtTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileRight");
-                    _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
-                    _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
-                    _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
-                    _DirtToGrassLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassLeft");
-                    _DirtToGrassRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassRight");
-                    _GrassTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileLeft");
-                    _GrassTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileRight");
-
-                    #endregion
+                    LoadTextures();
 
                     #region Level2 inladen
                     Level2Array = new byte[,]
@@ -260,24 +207,9 @@ namespace Project_Gamedev
                         { 13,15,2,2,2,2,2,2,2,16,14 }
                     };
 
+                    //Level 2 aanmaken en textures inladen
                     _level2 = new Level(Level2Array);
-
-                    _level2.AddTextures(_groundTileLeft);       // 0
-                    _level2.AddTextures(_groundTileMiddle);     // 1
-                    _level2.AddTextures(_groundTileRight);      // 2
-                    _level2.AddTextures(_islandTileLeft);       // 3
-                    _level2.AddTextures(_islandTileMiddle);     // 4
-                    _level2.AddTextures(_islandTileRight);      // 5
-                    _level2.AddTextures(_dirtTileLeft);         // 6
-                    _level2.AddTextures(_dirtTileMiddle);       // 7
-                    _level2.AddTextures(_dirtTileRight);        // 8
-                    _level2.AddTextures(_dirtTileWallLeft);     // 9
-                    _level2.AddTextures(_dirtTileWallMiddle);   // 10
-                    _level2.AddTextures(_dirtTileWallRight);    // 11
-                    _level2.AddTextures(_DirtToGrassLeft);      // 12
-                    _level2.AddTextures(_DirtToGrassRight);     // 13
-                    _level2.AddTextures(_GrassTileLeft);        // 14
-                    _level2.AddTextures(_GrassTileRight);       // 15
+                    AddTexturesToLevel(_level2);
                     _level2.CreateWorld();
 
                     //Player projectile object aanmaken en texture geven
@@ -391,7 +323,7 @@ namespace Project_Gamedev
                     #region player schieten
                     if (_player.FireProjectile)
                     {
-                        myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y), _player.PlayerWalkedLeft, gameTime.TotalGameTime.TotalSeconds);
+                        myProjectiles.AddPlayerProjectile(_playerProjectileTexture, new Vector2(_player.Positie.X, _player.Positie.Y + 5), _player.PlayerWalkedLeft, gameTime.TotalGameTime.TotalSeconds);
                     }
 
                     //projectile lijst wordt elke update opnieuw ingeladen
@@ -422,7 +354,7 @@ namespace Project_Gamedev
                         _player.IsGrounded = false;
                     }
 
-                    //Collisions rechts controlleren
+                    //Collisions right controlleren
                     if (myCollisions.RightCollisions.Count > 0)
                     {
                         Console.WriteLine("RIGHT COLLISION");
@@ -521,8 +453,7 @@ namespace Project_Gamedev
 
                     //Checken of player dood is
                     if (_player.playerKilled)
-                    {
-                        
+                    {                        
                         _player.playerKilled = false;
                         playerPoints = 0;
                         if (level1Cleared)
@@ -569,7 +500,6 @@ namespace Project_Gamedev
                 //Camera automatisch laten stijgen
                 campos -= new Vector2(0, 1);
             }
-
             base.Update(gameTime);
         }
 
@@ -581,75 +511,27 @@ namespace Project_Gamedev
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             var viewMatrix = camera.GetViewMatrix();
+
             switch (CurrentGameState)
             {
-                #region Main menu
                 case GameState.MainMenu:
                     spriteBatch.Begin();
                     _mainStartButton.Draw(spriteBatch);
                     _mainControlsButton.Draw(spriteBatch);
                     spriteBatch.End();
                     break;
-                #endregion
-
-                #region Controls
                 case GameState.Controls:
                     spriteBatch.Begin();
                     _controlsLayout.Draw(spriteBatch);
                     _controlsBackButton.Draw(spriteBatch);
                     spriteBatch.End();
                     break;
-                #endregion
-
-                #region Level1
                 case GameState.Level1:
-                    camera.Position = campos;
-                    spriteBatch.Begin(transformMatrix: viewMatrix);
-
-                    _level1.DrawLevel(spriteBatch);
-                    _player.Draw(spriteBatch);
-
-                    //Als er enemy minotaurs zijn ze tonen
-                    if (_enemyMinotaurList != null)
-                    {
-                        foreach (var enemy in _enemyMinotaurList)
-                        {
-                            enemy.Draw(spriteBatch);
-                        }
-                    }
-
-                    myProjectiles.DrawPlayerProjectiles(spriteBatch);
-                    //Score tonen
-                    spriteBatch.DrawString(scoreFont, "Score: " + playerPoints.ToString(), new Vector2(campos.X, campos.Y), Color.White);
-                    spriteBatch.End();
-                    
+                    DrawLevel(_level1, viewMatrix);
                     break;
-                #endregion
-
-                #region Level2
                 case GameState.Level2:
-                    camera.Position = campos;
-
-                    spriteBatch.Begin(transformMatrix: viewMatrix);
-
-                    _level2.DrawLevel(spriteBatch);
-                    _player.Draw(spriteBatch);
-
-                    //Als er enemy minotaurs zijn ze tonen
-                    if (_enemyMinotaurList != null)
-                    {
-                        foreach (var enemy in _enemyMinotaurList)
-                        {
-                            enemy.Draw(spriteBatch);
-                        }
-                    }
-
-                    myProjectiles.DrawPlayerProjectiles(spriteBatch);
-                    //Score tonen
-                    spriteBatch.DrawString(scoreFont, "Score: " + playerPoints.ToString(), new Vector2(campos.X, campos.Y), Color.White);
-                    spriteBatch.End();
+                    DrawLevel(_level2, viewMatrix);
                     break;
-                #endregion
                 case GameState.EndScreen:
                     GraphicsDevice.Clear(Color.Black);
                     spriteBatch.Begin();
@@ -658,8 +540,76 @@ namespace Project_Gamedev
                     spriteBatch.End();
                     break;
             }
-
             base.Draw(gameTime);
+        }
+
+        public void LoadTextures()
+        {
+            _playerProjectileTexture = Content.Load<Texture2D>("Sprites\\Projectiles\\fireball");
+            _playerTexture = Content.Load<Texture2D>("Sprites\\Characters\\Player\\Player sprite");
+            _enemyMinotaurTexture = Content.Load<Texture2D>("Sprites\\Characters\\Enemy\\Minotaur sprite");
+
+            //Tile textures
+            _groundTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileLeft");
+            _groundTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileMiddle");
+            _groundTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GroundTileRight");
+            _islandTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileLeft");
+            _islandTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileMiddle");
+            _islandTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\IslandTileRight");
+            _dirtTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileLeft");
+            _dirtTileMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileMiddle");
+            _dirtTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileRight");
+            _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
+            _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
+            _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
+            _DirtToGrassLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassLeft");
+            _DirtToGrassRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassRight");
+            _GrassTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileLeft");
+            _GrassTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileRight");
+        }
+
+        public void AddTexturesToLevel(Level level)
+        {
+            level.AddTextures(_groundTileLeft);       // 0
+            level.AddTextures(_groundTileMiddle);     // 1
+            level.AddTextures(_groundTileRight);      // 2
+            level.AddTextures(_islandTileLeft);       // 3
+            level.AddTextures(_islandTileMiddle);     // 4
+            level.AddTextures(_islandTileRight);      // 5
+            level.AddTextures(_dirtTileLeft);         // 6
+            level.AddTextures(_dirtTileMiddle);       // 7
+            level.AddTextures(_dirtTileRight);        // 8
+            level.AddTextures(_dirtTileWallLeft);     // 9
+            level.AddTextures(_dirtTileWallMiddle);   // 10
+            level.AddTextures(_dirtTileWallRight);    // 11
+            level.AddTextures(_DirtToGrassLeft);      // 12
+            level.AddTextures(_DirtToGrassRight);     // 13
+            level.AddTextures(_GrassTileLeft);        // 14
+            level.AddTextures(_GrassTileRight);       // 15
+            
+        }
+
+        public void DrawLevel(Level level, Matrix viewMatrix)
+        {
+            camera.Position = campos;
+            spriteBatch.Begin(transformMatrix: viewMatrix);
+
+            level.DrawLevel(spriteBatch);
+            _player.Draw(spriteBatch);
+
+            //Als er enemy minotaurs zijn ze tonen
+            if (_enemyMinotaurList != null)
+            {
+                foreach (var enemy in _enemyMinotaurList)
+                {
+                    enemy.Draw(spriteBatch);
+                }
+            }
+
+            myProjectiles.DrawPlayerProjectiles(spriteBatch);
+            //Score tonen
+            spriteBatch.DrawString(scoreFont, "Score: " + playerPoints.ToString(), new Vector2(campos.X, campos.Y), Color.White);
+            spriteBatch.End();
         }
     }
 }
