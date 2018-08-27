@@ -337,3 +337,17 @@
 /processorParam:TextureFormat=Color
 /build:Sprites/Tiles/GrassTileRight.png
 
+#begin Sprites/Fonts/ScoreFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Sprites/Fonts/ScoreFont.spritefont
+
+#begin Sprites/Fonts/EndScreenFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Sprites/Fonts/EndScreenFont.spritefont
+

@@ -15,6 +15,9 @@ namespace Project_Gamedev
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        SpriteFont scoreFont;
+        SpriteFont endScreenFont;
+
         enum GameState
         {
             MainMenu,
@@ -24,6 +27,9 @@ namespace Project_Gamedev
             EndScreen
         }
         GameState CurrentGameState = GameState.MainMenu;
+
+        int playerPoints = 0, level1Points;
+        bool level1Cleared = false;
 
         //Main menu
         Button _mainStartButton;
@@ -101,6 +107,8 @@ namespace Project_Gamedev
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            scoreFont = Content.Load<SpriteFont>("Sprites\\Fonts\\ScoreFont");
+            endScreenFont = Content.Load<SpriteFont>("Sprites\\Fonts\\EndScreenFont");
 
             switch (CurrentGameState)
             {
@@ -498,15 +506,13 @@ namespace Project_Gamedev
                             {
                                 myProjectiles.RemovePlayerProjectile(collisionIndex);
                                 _enemyMinotaurList.Remove(enemy);
+                                playerPoints += 100;
                                 break;
                             }
 
                             //Player enemy collision
                             if (myCollisions.CheckEnemyPlayerCollision(_player, enemy))
                             {
-                                //_player.Reset();
-                                //campos = new Vector2(-150, 100);
-                                //LoadContent();
                                 _player.playerKilled = true;
                             }
                         }
@@ -516,13 +522,21 @@ namespace Project_Gamedev
                     //Checken of player dood is
                     if (_player.playerKilled)
                     {
-                        LoadContent();
+                        
                         _player.playerKilled = false;
+                        playerPoints = 0;
+                        if (level1Cleared)
+                        {
+                            playerPoints = level1Points;
+                        }
+                        LoadContent();
                     }
 
                     if (_player.level1Cleared)
                     {
                         CurrentGameState = GameState.Level2;
+                        level1Points = playerPoints;
+                        level1Cleared = true;
                         LoadContent();
                     }
 
@@ -531,6 +545,7 @@ namespace Project_Gamedev
                         CurrentGameState = GameState.EndScreen;
                         LoadContent();
                     }
+                    Console.WriteLine(playerPoints);
                     break;
             }
 
@@ -588,9 +603,7 @@ namespace Project_Gamedev
 
                 #region Level1
                 case GameState.Level1:
-                    
                     camera.Position = campos;
-
                     spriteBatch.Begin(transformMatrix: viewMatrix);
 
                     _level1.DrawLevel(spriteBatch);
@@ -606,14 +619,15 @@ namespace Project_Gamedev
                     }
 
                     myProjectiles.DrawPlayerProjectiles(spriteBatch);
-
+                    //Score tonen
+                    spriteBatch.DrawString(scoreFont, "Score: " + playerPoints.ToString(), new Vector2(campos.X, campos.Y), Color.White);
                     spriteBatch.End();
+                    
                     break;
                 #endregion
 
                 #region Level2
                 case GameState.Level2:
-                    //var viewMatrix = camera.GetViewMatrix();
                     camera.Position = campos;
 
                     spriteBatch.Begin(transformMatrix: viewMatrix);
@@ -631,13 +645,15 @@ namespace Project_Gamedev
                     }
 
                     myProjectiles.DrawPlayerProjectiles(spriteBatch);
-
+                    //Score tonen
+                    spriteBatch.DrawString(scoreFont, "Score: " + playerPoints.ToString(), new Vector2(campos.X, campos.Y), Color.White);
                     spriteBatch.End();
                     break;
                 #endregion
                 case GameState.EndScreen:
                     GraphicsDevice.Clear(Color.Black);
                     spriteBatch.Begin();
+                    spriteBatch.DrawString(endScreenFont, "Totale score: " + playerPoints.ToString(), new Vector2(300, 300), Color.White);
                     _victoryAchieved.Draw(spriteBatch);
                     spriteBatch.End();
                     break;

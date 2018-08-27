@@ -31,5 +31,7 @@
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtToGrassRight.png</File>
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/GrassTileLeft.png</File>
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/GrassTileRight.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Fonts/ScoreFont.spritefont</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Fonts/EndScreenFont.spritefont</File>
   </SourceFiles>
 </SourceFileCollection>

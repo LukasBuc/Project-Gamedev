@@ -58,7 +58,11 @@ namespace Project_Gamedev.Classes
         }
         public void RemovePlayerProjectile(int collideObject)
         {
-            PlayerProjectileList.RemoveAt(collideObject);
+            if (PlayerProjectileList.Count > collideObject)
+            {
+                PlayerProjectileList.RemoveAt(collideObject);
+            }
+            
         }
     }
 }

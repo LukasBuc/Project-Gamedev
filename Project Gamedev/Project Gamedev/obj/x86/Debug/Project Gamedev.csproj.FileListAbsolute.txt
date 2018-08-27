@@ -90,3 +90,5 @@ C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windo
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\DirtToGrassRight.xnb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\GrassTileLeft.xnb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\GrassTileRight.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Fonts\ScoreFont.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Fonts\EndScreenFont.xnb
