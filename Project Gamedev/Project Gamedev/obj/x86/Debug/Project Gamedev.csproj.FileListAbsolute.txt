@@ -49,7 +49,6 @@ C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windo
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct3D11.xml
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.Direct2D1.xml
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\SharpDX.XInput.xml
-C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.csprojAssemblyReference.cache
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.csproj.CoreCompileInputs.cache
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.csproj.CopyComplete
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.exe
@@ -92,3 +91,4 @@ C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windo
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Tiles\GrassTileRight.xnb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Fonts\ScoreFont.xnb
 C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\bin\Windows\x86\Debug\Content\Sprites\Fonts\EndScreenFont.xnb
+C:\Users\Lukas\Desktop\Project-Gamedev\Project Gamedev\Project Gamedev\obj\x86\Debug\Project Gamedev.csprojAssemblyReference.cache
