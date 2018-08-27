@@ -23,7 +23,7 @@ namespace Project_Gamedev
             Level2,
             EndScreen
         }
-        GameState CurrentGameState = GameState.EndScreen;
+        GameState CurrentGameState = GameState.MainMenu;
 
         //Main menu
         Button _mainStartButton;
@@ -44,6 +44,10 @@ namespace Project_Gamedev
         Texture2D _dirtTileWallLeft;
         Texture2D _dirtTileWallMiddle;
         Texture2D _dirtTileWallRight;
+        Texture2D _DirtToGrassLeft;
+        Texture2D _DirtToGrassRight;
+        Texture2D _GrassTileLeft;
+        Texture2D _GrassTileRight;
         Texture2D _playerProjectileTexture;
         Texture2D _enemyMinotaurTexture;
 
@@ -126,21 +130,25 @@ namespace Project_Gamedev
                     _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
                     _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
                     _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
+                    _DirtToGrassLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassLeft");
+                    _DirtToGrassRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassRight");
+                    _GrassTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileLeft");
+                    _GrassTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileRight");
 
                     #endregion
 
                     #region Level1 inladen
                     Level1Array = new byte[,]
                     {
-                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0 },
-                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0 }, //Max hoogte scherm
-                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,11 },
-                        {1,0,0,0,0,0,0,0,0,0,0,0,4,5,6,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,8,8,8 },
-                        {1,0,0,4,6,0,0,0,0,4,6,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0 },
-                        {1,6,0,0,0,0,0,4,6,0,0,0,0,0,4,6,0,0,0,0,4,5,5,5,6,0,0,0,0,0,4,6,0,0,0,0,1,2,2,2 },
-                        {1,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,10,11,11,11 },
-                        {1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,10,0,0,0 },
-                        {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,10,0,0,0 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,4,5,6,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,8,8,8,8,8,8,8,8,8,8,8,8,8 },
+                        {1,0,0,4,6,0,0,0,0,4,6,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+                        {1,6,0,0,0,0,0,4,6,0,0,0,0,0,4,6,0,0,0,0,4,5,5,5,6,0,0,0,0,0,4,6,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2 },
+                        {1,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11 },
+                        {1,0,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,4,6,0,0,0,0,0,0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11 },
+                        {1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11 },
                     };
 
                     _level1 = new Level(Level1Array);
@@ -211,33 +219,37 @@ namespace Project_Gamedev
                     _dirtTileWallLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallLeft");
                     _dirtTileWallMiddle = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallMiddle");
                     _dirtTileWallRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtTileWallRight");
+                    _DirtToGrassLeft = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassLeft");
+                    _DirtToGrassRight = Content.Load<Texture2D>("Sprites\\Tiles\\DirtToGrassRight");
+                    _GrassTileLeft = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileLeft");
+                    _GrassTileRight = Content.Load<Texture2D>("Sprites\\Tiles\\GrassTileRight");
 
                     #endregion
 
                     #region Level2 inladen
                     Level2Array = new byte[,]
                     {
-                        { 9,0,0,0,0,0,0,0,0,0,7 },
-                        { 9,0,0,0,0,0,0,0,0,0,7 },
-                        { 9,0,0,0,0,0,0,0,0,0,7 },
-                        { 9,0,0,6,0,0,0,0,4,0,7 },
-                        { 9,0,0,0,6,0,0,4,0,0,7 },
-                        { 9,0,0,0,0,2,2,0,0,0,7 },
-                        { 9,0,0,0,1,0,0,1,0,0,7 },
-                        { 9,0,0,1,0,0,0,0,0,4,7 },
-                        { 9,0,4,0,0,0,0,0,6,0,7 },
-                        { 9,1,0,0,0,1,0,0,0,1,7 },
-                        { 9,1,1,1,1,1,6,0,4,0,7 },
-                        { 9,0,0,0,0,0,0,1,0,0,7 },
-                        { 9,0,0,0,0,4,6,0,0,0,7 },
-                        { 9,0,0,0,4,6,0,0,0,0,7 },
-                        { 9,0,4,1,1,0,0,0,0,0,7 },
-                        { 9,1,0,0,0,0,1,6,0,0,7 },
-                        { 9,1,1,1,1,1,1,0,0,1,7 },
-                        { 1,1,1,1,1,1,0,0,1,1,1 },
-                        { 1,1,1,1,1,1,6,0,0,0,1 },
-                        { 1,0,0,0,0,0,0,1,0,0,1 }, //12 voor links, 10 voor rechts
-                        { 1,2,2,2,2,2,2,2,2,2,3 }
+                        { 12,0,0,0,0,0,0,0,0,0,10 },
+                        { 12,0,0,0,0,0,0,0,0,0,10 },
+                        { 12,0,0,0,0,0,0,0,0,0,10 },
+                        { 12,4,5,6,0,0,0,0,4,6,10 },
+                        { 12,4,5,5,6,0,0,4,5,6,10 },
+                        { 12,0,0,0,0,2,2,0,0,0,10 },
+                        { 12,0,0,0,1,0,0,6,0,0,10 },
+                        { 12,0,0,1,0,0,0,0,0,4,10 },
+                        { 12,0,4,0,0,0,0,4,6,0,10 },
+                        { 12,1,0,0,0,1,0,0,0,4,10 },
+                        { 12,1,1,1,1,11,6,0,4,0,10 },
+                        { 12,0,0,0,0,0,0,4,6,0,10 },
+                        { 12,0,0,0,0,4,6,0,0,0,10 },
+                        { 12,0,0,0,4,6,0,0,0,0,10 },
+                        { 12,0,4,5,6,0,0,0,0,0,10 },
+                        { 12,1,0,0,0,0,1,6,0,0,10 },
+                        { 12,2,2,2,2,2,9,0,0,1,10 },
+                        { 12,11,11,11,11,12,0,0,1,11,10 },
+                        { 12,8,8,8,8,8,6,0,0,0,10 },
+                        { 12,0,0,0,0,0,0,1,0,0,10 },
+                        { 13,15,2,2,2,2,2,2,2,16,14 }
                     };
 
                     _level2 = new Level(Level2Array);
@@ -254,6 +266,10 @@ namespace Project_Gamedev
                     _level2.AddTextures(_dirtTileWallLeft);     // 9
                     _level2.AddTextures(_dirtTileWallMiddle);   // 10
                     _level2.AddTextures(_dirtTileWallRight);    // 11
+                    _level2.AddTextures(_DirtToGrassLeft);      // 12
+                    _level2.AddTextures(_DirtToGrassRight);     // 13
+                    _level2.AddTextures(_GrassTileLeft);        // 14
+                    _level2.AddTextures(_GrassTileRight);       // 15
                     _level2.CreateWorld();
 
                     //Player projectile object aanmaken en texture geven
@@ -266,12 +282,8 @@ namespace Project_Gamedev
                     //Enemy objects aanmaken
                     _enemyMinotaurList = new List<Enemy>
                     {
-                        //new Enemy(_enemyMinotaurTexture, new Vector2(100, 480)),
-                        //new Enemy(_enemyMinotaurTexture, new Vector2(230, 480)),
-                        //new Enemy(_enemyMinotaurTexture, new Vector2(580, 480)),
-                        //new Enemy(_enemyMinotaurTexture, new Vector2(730, 480)),
-                        //new Enemy(_enemyMinotaurTexture, new Vector2(850, 480)),
-                        new Enemy(_enemyMinotaurTexture, new Vector2(950, 480))
+                        new Enemy(_enemyMinotaurTexture, new Vector2(80, 1000)),
+                        new Enemy(_enemyMinotaurTexture, new Vector2(80, 600))
                     };
 
                     //Collision object aanmaken
@@ -456,7 +468,7 @@ namespace Project_Gamedev
                             if (myCollisions.BottomCollisions.Count > 0)
                             {
                                 enemy.IsGrounded = true;
-                                enemy.setCorrectHeight(myCollisions.BottomCollisionHeight);
+                                enemy.SetCorrectHeight(myCollisions.BottomCollisionHeight);
                             }
                             else
                             {

@@ -140,7 +140,7 @@ namespace Project_Gamedev.Classes
             }           
         }
 
-        public void setCorrectHeight(int collisionHeight)
+        public void SetCorrectHeight(int collisionHeight)
         {
             Vector2 newPosition = new Vector2(Positie.X, collisionHeight - enemyHeight);
             Positie = newPosition;

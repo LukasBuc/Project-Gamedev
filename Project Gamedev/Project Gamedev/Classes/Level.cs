@@ -80,6 +80,18 @@ namespace Project_Gamedev.Classes
                         case 12:
                             TileArray[x, y] = new Tile(Texture[11], new Vector2(y * Height, x * Width));
                             break;
+                        case 13:
+                            TileArray[x, y] = new Tile(Texture[12], new Vector2(y * Height, x * Width));
+                            break;
+                        case 14:
+                            TileArray[x, y] = new Tile(Texture[13], new Vector2(y * Height, x * Width));
+                            break;
+                        case 15:
+                            TileArray[x, y] = new Tile(Texture[14], new Vector2(y * Height, x * Width));
+                            break;
+                        case 16:
+                            TileArray[x, y] = new Tile(Texture[15], new Vector2(y * Height, x * Width));
+                            break;
                     }
                 }
             }

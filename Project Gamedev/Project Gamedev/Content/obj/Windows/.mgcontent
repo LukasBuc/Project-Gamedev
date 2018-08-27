@@ -27,5 +27,9 @@
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Buttons/ButtonBack.png</File>
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Buttons/ButtonBackHover.png</File>
     <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Extra/VictoryAchieved.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtToGrassLeft.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/DirtToGrassRight.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/GrassTileLeft.png</File>
+    <File>C:/Users/Lukas/Desktop/Project-Gamedev/Project Gamedev/Project Gamedev/Content/Sprites/Tiles/GrassTileRight.png</File>
   </SourceFiles>
 </SourceFileCollection>
